@@ -1,0 +1,53 @@
+.backGroundLogin {
+    background-color:#fbeeee;
+    width:100%;
+    height:100%;
+    position:fixed;
+    top:0;
+    left:0;
+}
+.parent {
+    width: 70%;
+    height: 85%;
+    top: 5%;
+
+    margin: auto auto;
+    position: relative;
+    background:white;
+    display: grid;
+    grid-template-columns: 40% 60%;
+    grid-auto-rows: 100%;
+}
+.loginScreen {
+    background-color: white;
+}
+.loginImageScreen {
+    width: 100%;
+    height: 100%;
+}
+.container{
+    display : flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    margin-top: 50px;
+    gap:10px
+}
+.welcomeText {
+    font-size: 27px;
+}
+.LineSize{
+    border: none;
+    border-top: 1px solid #333;
+    align-items: center;
+    width : 60%;
+}
+
+
+
+
+
+
+
+
