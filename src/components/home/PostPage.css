@@ -18,30 +18,30 @@
 
 
 }
-.img-design {
+.firstImg-design {
     width : 300px;
     height: 250px;
 }
-.img-design2 {
+.secondImg-design2 {
     width : 400px;
     height: 350px;
 }
-.img-design3 {
+.thirdImg-design3 {
     width : 300px;
     height: 250px;
 }
-.text-design {
+.text-comment {
     width : 300px;
     height: 250px;
     font-size: 20px;
 
 }
-.text-design2 {
+.text-comment2 {
     width : 400px;
     height: 350px;
     font-size: 20px;
 }
-.text-design3 {
+.text-comment3 {
     width : 300px;
     height: 250px;
     font-size: 20px;

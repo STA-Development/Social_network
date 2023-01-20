@@ -25,19 +25,19 @@
     width: 100%;
     height: 100%;
 }
-.SignUpContainer{
+.signUpContainer{
     display : flex;
     flex-direction: column;
     text-align: center;
     align-items: center;
     justify-content: center;
 }
-.SignUpWelcomeText {
+.signUpWelcomeText {
     font-size: 27px;
     margin-top: 50px;
 
 }
-.SignUpLineSize{
+.signUpLineSize{
     border: none;
     border-top: 1px solid #333;
     align-items: center;

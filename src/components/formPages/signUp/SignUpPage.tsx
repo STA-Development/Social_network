@@ -39,7 +39,7 @@ const SignUpPage = () => {
         <Box className='signUpScreen'>
           <Box
             onSubmit={onSubmit}
-            className='SignUpContainer'
+            className='signUpContainer'
             component='form'
             sx={{
               '& > :not(style)': { m: 1 },
@@ -59,7 +59,7 @@ const SignUpPage = () => {
               </Button>
             </Box>
 
-            <hr className=' SignUpLineSize' />
+            <hr className=' signUpLineSize' />
 
             <TextField
               required
@@ -129,9 +129,9 @@ const SignUpPage = () => {
             >
               SIGN UP
             </Button>
-            <p>
+            <Typography>
               Already have an account ? <Link to='/'>Sign in </Link>{' '}
-            </p>
+            </Typography>
           </Box>
         </Box>
         <Box>

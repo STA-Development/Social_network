@@ -19,21 +19,21 @@ const PostsPage = () => {
         </Box>
         <Box className='imageParent'>
           <Box className='backgroundImage'>
-            <img className='img-design' src={happy2} alt='happy' />
-            <Typography className='text-design'>
+            <img className='firstImg-design' src={happy2} alt='happy' />
+            <Typography className='text-comment'>
               To forget how to dig the earth and to tend the soil is to forget ourselves.
             </Typography>
           </Box>
           <Box className='backgroundImage'>
-            <img className='img-design2' src={happy} alt='happy' />
-            <Typography className='text-design2'>
+            <img className='secondImg-design2' src={happy} alt='happy' />
+            <Typography className='text-comment2'>
               The moments of happiness we enjoy take us by surprise. It is not that we seize them,
               but that they seize us.
             </Typography>
           </Box>
           <Box className='backgroundImage'>
-            <img className='img-design3' src={happy3} alt='happy' />
-            <Typography className='text-design3'>
+            <img className='thirdImg-design3' src={happy3} alt='happy' />
+            <Typography className='text-comment3'>
               The good you do today will be forgotten tomorrow. Do good anyway.
             </Typography>
           </Box>
