@@ -2,7 +2,7 @@ import * as React from 'react';
 import '../login/LoginPage.css';
 import moon from '../../../images/cloud2.jpg';
 import Button from '@mui/material/Button';
-import { GoogleButton, LogIn } from '../colorButton';
+import { GoogleButtonUI, LogInUI } from '../colorButton';
 import GoogleLogo from '../logos/GoogleLogo';
 import { Link } from 'react-router-dom';
 import './SignUp.css';
@@ -10,6 +10,7 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { createUsers } from '../../axios/api';
 
 const SignUpPage = () => {
   const [firstName, setFirstName] = useState<string>('');
@@ -21,10 +22,18 @@ const SignUpPage = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-
+  const handleSignUp = async () => {
+    const response = await createUsers({
+      first_name: firstName,
+      last_name: lastName,
+      email: email,
+      password: password,
+    });
+    console.log(response, 'response');
+  };
   const onSubmit = handleSubmit((data) => console.log(data));
   return (
-    <div className='backGroundSignUp'>
+    <div className='backgroundSignUp'>
       <div className='parentSignUp'>
         <div className='signUpScreen'>
           <Box
@@ -34,14 +43,12 @@ const SignUpPage = () => {
             sx={{
               '& > :not(style)': { m: 1 },
             }}
-            noValidate
-            autoComplete='off'
           >
             <div>
               <h1 className='SignUpWelcomeText'>Create Account</h1>
               <p>Welcome, Please create an account</p>
 
-              <Button sx={GoogleButton} variant='outlined'>
+              <Button sx={GoogleButtonUI} variant='outlined'>
                 <GoogleLogo />
                 <span style={{ marginLeft: '5px' }}>Sign in with google</span>
               </Button>
@@ -109,7 +116,7 @@ const SignUpPage = () => {
               </p>
             )}
 
-            <Button sx={LogIn} variant='contained' type='submit'>
+            <Button onClick={() => handleSignUp()} sx={LogInUI} variant='contained' type='submit'>
               SIGN UP
             </Button>
             <p>

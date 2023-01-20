@@ -1,4 +1,4 @@
-export const GoogleButton = {
+export const GoogleButtonUI = {
   border: '1px solid black',
   '&.MuiButton-contained': {
     color: 'black',
@@ -8,7 +8,7 @@ export const GoogleButton = {
   },
 };
 
-export const LogIn = {
+export const LogInUI = {
   border: 'none solid black',
   '&.MuiButton-contained': {
     color: 'white',

@@ -2,13 +2,14 @@ import * as React from 'react';
 import './LoginPage.css';
 import moon from '../../../images/moon.jpg';
 import Button from '@mui/material/Button';
-import { GoogleButton, LogIn } from '../colorButton';
+import { GoogleButtonUI, LogInUI } from '../colorButton';
 import GoogleLogo from '../logos/GoogleLogo';
 import { Link } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
+import { login } from '../../axios/api';
 
 const LoginPage = () => {
   const [email, setEmail] = useState<string>('');
@@ -19,9 +20,19 @@ const LoginPage = () => {
     formState: { errors },
   } = useForm();
 
+  const handleLogin = async () => {
+    const response = await login({
+      email: email,
+      password: password,
+    });
+    localStorage.setItem('accessToken', response.data.token);
+    console.log(response, 'response');
+  };
+
   const onSubmit = handleSubmit((data) => console.log(data));
+
   return (
-    <div className='backGroundLogin'>
+    <div className='backgroundLogin'>
       <div className='parent'>
         <div className='loginScreen'>
           <Box
@@ -37,12 +48,12 @@ const LoginPage = () => {
             <h1 className='welcomeText'>Welcome Back, User</h1>
             <p>Welcome Back ! Please enter your details</p>
 
-            <Button sx={GoogleButton} variant='outlined'>
+            <Button sx={GoogleButtonUI} variant='outlined'>
               <GoogleLogo />
               <span style={{ marginLeft: '5px' }}>Log in with google</span>
             </Button>
 
-            <hr className='LineSize' />
+            <hr className='lineSize' />
 
             <TextField
               className='TextFieldColor'
@@ -75,7 +86,7 @@ const LoginPage = () => {
             {errors.password && <p style={{ color: 'red' }}>Password is not correct!</p>}
             <p>Forget Password</p>
 
-            <Button sx={LogIn} variant='contained' type='submit'>
+            <Button onClick={() => handleLogin()} sx={LogInUI} variant='contained' type='submit'>
               LOG IN
             </Button>
 

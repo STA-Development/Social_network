@@ -1,4 +1,4 @@
-.backGroundLogin {
+.backgroundLogin {
     background-color:#fbeeee;
     width:100%;
     height:100%;
@@ -37,7 +37,7 @@
 .welcomeText {
     font-size: 27px;
 }
-.LineSize{
+.lineSize{
     border: none;
     border-top: 1px solid #333;
     align-items: center;
