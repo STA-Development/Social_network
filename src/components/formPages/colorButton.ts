@@ -8,7 +8,7 @@ export const GoogleButtonUI = {
   },
 };
 
-export const LogInUI = {
+export const LogInButtonUI = {
   border: 'none solid black',
   '&.MuiButton-contained': {
     color: 'white',

@@ -2,12 +2,13 @@ import * as React from 'react';
 import '../login/LoginPage.css';
 import moon from '../../../images/cloud2.jpg';
 import Button from '@mui/material/Button';
-import { GoogleButtonUI, LogInUI } from '../colorButton';
+import { GoogleButtonUI, LogInButtonUI } from '../colorButton';
 import GoogleLogo from '../logos/GoogleLogo';
 import { Link } from 'react-router-dom';
 import './SignUp.css';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { createUsers } from '../../axios/api';
@@ -33,9 +34,9 @@ const SignUpPage = () => {
   };
   const onSubmit = handleSubmit((data) => console.log(data));
   return (
-    <div className='backgroundSignUp'>
-      <div className='parentSignUp'>
-        <div className='signUpScreen'>
+    <Box className='backgroundSignUp'>
+      <Box className='parentSignUp'>
+        <Box className='signUpScreen'>
           <Box
             onSubmit={onSubmit}
             className='SignUpContainer'
@@ -44,15 +45,19 @@ const SignUpPage = () => {
               '& > :not(style)': { m: 1 },
             }}
           >
-            <div>
-              <h1 className='SignUpWelcomeText'>Create Account</h1>
-              <p>Welcome, Please create an account</p>
+            <Box>
+              <Box>
+                <Typography variant='h4' className='SignUpWelcomeText'>
+                  Create Account
+                </Typography>
+              </Box>
+              <Typography>Welcome, Please create an account</Typography>
 
               <Button sx={GoogleButtonUI} variant='outlined'>
                 <GoogleLogo />
                 <span style={{ marginLeft: '5px' }}>Sign in with google</span>
               </Button>
-            </div>
+            </Box>
 
             <hr className=' SignUpLineSize' />
 
@@ -110,25 +115,30 @@ const SignUpPage = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
             {errors.password && (
-              <p style={{ color: 'red' }}>
+              <Typography style={{ color: 'red' }}>
                 Password must contain at least one number and one uppercase and lowercase letter,
                 and at least 8 or more characters" !
-              </p>
+              </Typography>
             )}
 
-            <Button onClick={() => handleSignUp()} sx={LogInUI} variant='contained' type='submit'>
+            <Button
+              onClick={() => handleSignUp()}
+              sx={LogInButtonUI}
+              variant='contained'
+              type='submit'
+            >
               SIGN UP
             </Button>
             <p>
               Already have an account ? <Link to='/'>Sign in </Link>{' '}
             </p>
           </Box>
-        </div>
-        <div>
+        </Box>
+        <Box>
           <img className='signUpImageScreen ' src={moon} alt='moon' />
-        </div>
-      </div>
-    </div>
+        </Box>
+      </Box>
+    </Box>
   );
 };
 export default SignUpPage;

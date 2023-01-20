@@ -2,11 +2,12 @@ import * as React from 'react';
 import './LoginPage.css';
 import moon from '../../../images/moon.jpg';
 import Button from '@mui/material/Button';
-import { GoogleButtonUI, LogInUI } from '../colorButton';
+import { GoogleButtonUI, LogInButtonUI } from '../colorButton';
 import GoogleLogo from '../logos/GoogleLogo';
 import { Link } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { login } from '../../axios/api';
@@ -32,9 +33,9 @@ const LoginPage = () => {
   const onSubmit = handleSubmit((data) => console.log(data));
 
   return (
-    <div className='backgroundLogin'>
-      <div className='parent'>
-        <div className='loginScreen'>
+    <Box className='backgroundLogin'>
+      <Box className='parent'>
+        <Box className='loginScreen'>
           <Box
             onSubmit={onSubmit}
             className='container'
@@ -45,8 +46,10 @@ const LoginPage = () => {
             noValidate
             autoComplete='off'
           >
-            <h1 className='welcomeText'>Welcome Back, User</h1>
-            <p>Welcome Back ! Please enter your details</p>
+            <Typography variant='h4' className='welcomeText'>
+              Welcome Back, User
+            </Typography>
+            <Typography>Welcome Back ! Please enter your details</Typography>
 
             <Button sx={GoogleButtonUI} variant='outlined'>
               <GoogleLogo />
@@ -84,22 +87,27 @@ const LoginPage = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
             {errors.password && <p style={{ color: 'red' }}>Password is not correct!</p>}
-            <p>Forget Password</p>
+            <Typography>Forget Password</Typography>
 
-            <Button onClick={() => handleLogin()} sx={LogInUI} variant='contained' type='submit'>
+            <Button
+              onClick={() => handleLogin()}
+              sx={LogInButtonUI}
+              variant='contained'
+              type='submit'
+            >
               LOG IN
             </Button>
 
-            <p>
+            <Typography>
               Don't have an account ? <Link to='/SignUpPage'> Sign up </Link>
-            </p>
+            </Typography>
           </Box>
-        </div>
-        <div className='loginImageScreen'>
+        </Box>
+        <Box className='loginImageScreen'>
           <img className='loginImageScreen' src={moon} alt='moon' />
-        </div>
-      </div>
-    </div>
+        </Box>
+      </Box>
+    </Box>
   );
 };
 
