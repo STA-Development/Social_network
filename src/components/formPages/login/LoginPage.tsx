@@ -1,6 +1,4 @@
 import * as React from 'react';
-import './LoginPage.css';
-import moon from '../../../images/moon.jpg';
 import Button from '@mui/material/Button';
 import { GoogleButtonUI, LogInButtonUI } from '../colorButton';
 import GoogleLogo from '../logos/GoogleLogo';
@@ -11,6 +9,9 @@ import Typography from '@mui/material/Typography';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { login } from '../../axios/api';
+import { Divider } from '@mui/material';
+import { Moon } from '../../../assets/images/Moon';
+//import { screen } from '../colorButton';
 
 const LoginPage = () => {
   const [email, setEmail] = useState<string>('');
@@ -31,32 +32,80 @@ const LoginPage = () => {
   };
 
   const onSubmit = handleSubmit((data) => console.log(data));
+  const loginScreen = {
+    backgroundColor: '#fbeeee',
+    width: '100%',
+    height: '100%',
+    position: 'fixed',
+    top: '0',
+    left: '0',
+  };
+  const displayScreen = {
+    width: '70%',
+    height: '85%',
+    top: '5%',
+    margin: 'auto auto',
+    position: 'relative',
+    background: 'white',
+    display: 'grid',
+    gridTemplateColumns: '40% 60%',
+    gridAutoRows: '100%',
+  };
+  const submitDisplay = {
+    display: 'flex',
+    flexDirection: 'column',
+    textAlign: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: '50px',
+    gap: '10px',
+    '& > :not(style)': { m: 1 },
+  };
+  const divider = {
+    border: 'none',
+    borderTop: '1px solid #333',
+    alignItems: 'center',
+    width: '60%',
+  };
 
   return (
-    <Box className='backgroundLogin'>
-      <Box className='parent'>
-        <Box className='loginScreen'>
+    <Box
+      sx={{
+        ...loginScreen,
+      }}
+    >
+      <Box
+        sx={{
+          ...displayScreen,
+        }}
+      >
+        <Box sx={{ backgroundColor: 'white' }}>
           <Box
             onSubmit={onSubmit}
-            className='container'
             component='form'
             sx={{
-              '& > :not(style)': { m: 1 },
+              ...submitDisplay,
             }}
             noValidate
             autoComplete='off'
           >
-            <Typography variant='h4' className='welcomeText'>
+            <Typography variant='h4' sx={{ fontSize: '30px' }}>
               Welcome Back, User
             </Typography>
             <Typography>Welcome Back ! Please enter your details</Typography>
 
             <Button sx={GoogleButtonUI} variant='outlined'>
               <GoogleLogo />
-              <span style={{ marginLeft: '5px' }}>Log in with google</span>
+              <Box component='div' sx={{ display: 'inline', marginLeft: '5px' }}>
+                Log in with google
+              </Box>
             </Button>
 
-            <hr className='lineSize' />
+            <Divider
+              sx={{
+                ...divider,
+              }}
+            />
 
             <TextField
               className='TextFieldColor'
@@ -71,7 +120,9 @@ const LoginPage = () => {
               })}
               onChange={(e) => setEmail(e.target.value)}
             />
-            {errors.email && <p style={{ color: 'red' }}>Email address is not correct!</p>}
+            {errors.email && (
+              <Typography style={{ color: 'red' }}>Email address is not correct!</Typography>
+            )}
 
             <TextField
               id='standard-password-input'
@@ -86,7 +137,9 @@ const LoginPage = () => {
               })}
               onChange={(e) => setPassword(e.target.value)}
             />
-            {errors.password && <p style={{ color: 'red' }}>Password is not correct!</p>}
+            {errors.password && (
+              <Typography style={{ color: 'red' }}>Password is not correct!</Typography>
+            )}
             <Typography>Forget Password</Typography>
 
             <Button
@@ -103,8 +156,8 @@ const LoginPage = () => {
             </Typography>
           </Box>
         </Box>
-        <Box className='loginImageScreen'>
-          <img className='loginImageScreen' src={moon} alt='moon' />
+        <Box sx={{ width: '100%', height: '100%' }}>
+          <Moon />
         </Box>
       </Box>
     </Box>

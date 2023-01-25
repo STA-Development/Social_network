@@ -1,19 +1,23 @@
+import { borders, colors, border_style, margin, padding } from '../../assets/variables';
 export const GoogleButtonUI = {
-  border: '1px solid black',
+  border: `${borders.b1} ${border_style.solid} ${colors.black}`,
+  margin: margin.size,
+  padding: padding.size,
+
   '&.MuiButton-contained': {
-    color: 'black',
+    color: colors.black,
   },
   '&.MuiButton-outlined': {
-    color: 'black',
+    color: colors.black,
   },
 };
 
 export const LogInButtonUI = {
-  border: 'none solid black',
+  border: `${borders.none} ${border_style.solid} ${colors.black}`,
   '&.MuiButton-contained': {
-    color: 'white',
+    color: colors.white,
   },
   '&.MuiButton-outlined': {
-    color: 'black',
+    color: colors.white,
   },
 };

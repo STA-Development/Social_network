@@ -1,17 +1,16 @@
 import * as React from 'react';
-import '../login/LoginPage.css';
-import moon from '../../../images/cloud2.jpg';
+import { Cloud } from '../../../assets/images/Cloud';
 import Button from '@mui/material/Button';
 import { GoogleButtonUI, LogInButtonUI } from '../colorButton';
 import GoogleLogo from '../logos/GoogleLogo';
 import { Link } from 'react-router-dom';
-import './SignUp.css';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { createUsers } from '../../axios/api';
+import { Divider, Stack } from '@mui/material';
 
 const SignUpPage = () => {
   const [firstName, setFirstName] = useState<string>('');
@@ -33,37 +32,78 @@ const SignUpPage = () => {
     console.log(response, 'response');
   };
   const onSubmit = handleSubmit((data) => console.log(data));
+  const signUpScreen = {
+    backgroundColor: '#fbeeee',
+    width: '100%',
+    height: '100%',
+    position: 'fixed',
+    top: '0',
+    left: '0',
+  };
+  const inputFields = {
+    width: '70%',
+    height: '85%',
+    top: '5%',
+    margin: 'auto auto',
+    position: 'relative',
+    background: 'white',
+    display: 'grid',
+    gridTemplateColumns: '40% 60%',
+    gridAutoRows: '100%',
+  };
+  const displayScreen = {
+    display: 'flex',
+    flexDirection: 'column',
+    textAlign: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    '& > :not(style)': { m: 1 },
+  };
+  const divider = {
+    border: 'none',
+    borderTop: '1px solid #333',
+    alignItems: 'center',
+    width: '60%',
+  };
   return (
-    <Box className='backgroundSignUp'>
-      <Box className='parentSignUp'>
-        <Box className='signUpScreen'>
+    <Box sx={{ ...signUpScreen }}>
+      <Box
+        sx={{
+          ...inputFields,
+        }}
+      >
+        <Box sx={{ backgroundColor: 'white' }}>
           <Box
             onSubmit={onSubmit}
-            className='signUpContainer'
             component='form'
             sx={{
-              '& > :not(style)': { m: 1 },
+              ...displayScreen,
             }}
           >
             <Box>
-              <Box>
-                <Typography variant='h4' className='SignUpWelcomeText'>
+              <Stack spacing={2}>
+                <Typography variant='h4' sx={{ fontSize: '27px', marginTop: '50px' }}>
                   Create Account
                 </Typography>
-              </Box>
-              <Typography>Welcome, Please create an account</Typography>
 
+                <Typography>Welcome, Please create an account</Typography>
+              </Stack>
               <Button sx={GoogleButtonUI} variant='outlined'>
                 <GoogleLogo />
-                <span style={{ marginLeft: '5px' }}>Sign in with google</span>
+                <Box component='div' sx={{ display: 'inline', marginLeft: '5px' }}>
+                  Sign in with google
+                </Box>
               </Button>
             </Box>
 
-            <hr className=' signUpLineSize' />
+            <Divider
+              sx={{
+                ...divider,
+              }}
+            />
 
             <TextField
               required
-              className='TextFieldColor'
               id='firstName'
               label='First Name'
               variant='standard'
@@ -73,7 +113,9 @@ const SignUpPage = () => {
               })}
               onChange={(e) => setFirstName(e.target.value)}
             />
-            {errors.firstName && <p style={{ color: 'red' }}>firstName is required!</p>}
+            {errors.firstName && (
+              <Typography style={{ color: 'red' }}>firstName is required!</Typography>
+            )}
 
             <TextField
               required
@@ -86,7 +128,9 @@ const SignUpPage = () => {
               })}
               onChange={(e) => setLastName(e.target.value)}
             />
-            {errors.lastName && <p style={{ color: 'red' }}>lastName is required!</p>}
+            {errors.lastName && (
+              <Typography style={{ color: 'red' }}>lastName is required!</Typography>
+            )}
             <TextField
               required
               id='standard-email-required'
@@ -100,7 +144,9 @@ const SignUpPage = () => {
               })}
               onChange={(e) => setEmail(e.target.value)}
             />
-            {errors.email && <p style={{ color: 'red' }}>Correct email is required!</p>}
+            {errors.email && (
+              <Typography style={{ color: 'red' }}>Correct email is required!</Typography>
+            )}
             <TextField
               id='standard-password-input'
               label='Password'
@@ -135,7 +181,7 @@ const SignUpPage = () => {
           </Box>
         </Box>
         <Box>
-          <img className='signUpImageScreen ' src={moon} alt='moon' />
+          <Cloud />
         </Box>
       </Box>
     </Box>
