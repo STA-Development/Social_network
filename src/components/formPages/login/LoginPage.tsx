@@ -133,7 +133,7 @@ const LoginPage = () => {
               defaultValue={password}
               {...register('password', {
                 required: true,
-                pattern: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,15}$/,
+                pattern: /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
               })}
               onChange={(e) => setPassword(e.target.value)}
             />
