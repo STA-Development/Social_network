@@ -1,8 +1,8 @@
 import Navbar from './navbar/Navbar';
 import Box from '@mui/material/Box';
-import { Friends } from '../../assets/images/Friends';
-import { Nature } from '../../assets/images/Nature';
-import { Happy } from '../../assets/images/Happy';
+import { FriendsImage } from '../../assets/images/Friends';
+import { NatureHeaderImage } from '../../assets/images/Nature';
+import { HappyHeaderImage } from '../../assets/images/Happy';
 import * as React from 'react';
 import Typography from '@mui/material/Typography';
 
@@ -41,26 +41,15 @@ const PostsPage = () => {
           }}
         >
           <Box sx={{ width: '300px', height: '250px' }}>
-            <Friends />
-            <Typography sx={{ width: '300px', height: '250px', fontSize: '20px' }}>
-              To forget how to dig the earth and to tend the soil is to forget ourselves.
-            </Typography>
+            <FriendsImage />
           </Box>
           <Box>
-            <Nature />
-            <Typography sx={{ width: '400px', height: '350px', fontSize: '20px' }}>
-              The moments of happiness we enjoy take us by surprise. It is not that we seize them,
-              but that they seize us.
-            </Typography>
+            <NatureHeaderImage />
           </Box>
           <Box className='backgroundImage'>
-            <Happy />
-            <Typography sx={{ width: '300px', height: '250px', fontSize: '20px' }}>
-              The good you do today will be forgotten tomorrow. Do good anyway.
-            </Typography>
+            <HappyHeaderImage />
           </Box>
         </Box>
-        <Box className='AddButton'></Box>
       </Box>
     </Box>
   );

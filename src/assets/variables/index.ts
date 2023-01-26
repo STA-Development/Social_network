@@ -1,13 +1,20 @@
 export const margin = {
-  size: '30px',
+  top : '30px',
 };
 export const padding = {
-  size: '10px',
+ top: '10px',
 };
+export const position = {
+  property : 'fixed',
+  top : '0',
+  left : '0',
+}
 
 export const colors = {
   black: '#131924',
   white: '#ffffff',
+  lightRed :'#fbeeee',
+
 };
 export const borders = {
   b1: '1px',

@@ -10,8 +10,9 @@ import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { login } from '../../axios/api';
 import { Divider } from '@mui/material';
-import { Moon } from '../../../assets/images/Moon';
-//import { screen } from '../colorButton';
+import { MoonLoginImage } from '../../../assets/images/Moon';
+import { colors, position } from "../../../assets/variables";
+
 
 const LoginPage = () => {
   const [email, setEmail] = useState<string>('');
@@ -23,22 +24,24 @@ const LoginPage = () => {
   } = useForm();
 
   const handleLogin = async () => {
+
     const response = await login({
       email: email,
       password: password,
     });
     localStorage.setItem('accessToken', response.data.token);
-    console.log(response, 'response');
   };
 
-  const onSubmit = handleSubmit((data) => console.log(data));
+  const onSubmit = handleSubmit((data) => {
+
+    return(data)})
   const loginScreen = {
-    backgroundColor: '#fbeeee',
+    backgroundColor: colors.lightRed,
     width: '100%',
     height: '100%',
-    position: 'fixed',
-    top: '0',
-    left: '0',
+    position: position.property,
+    top: position.top,
+    left: position.left,
   };
   const displayScreen = {
     width: '70%',
@@ -81,7 +84,6 @@ const LoginPage = () => {
       >
         <Box sx={{ backgroundColor: 'white' }}>
           <Box
-            onSubmit={onSubmit}
             component='form'
             sx={{
               ...submitDisplay,
@@ -143,10 +145,9 @@ const LoginPage = () => {
             <Typography>Forget Password</Typography>
 
             <Button
-              onClick={() => handleLogin()}
+              onClick={(event) => {handleLogin(); onSubmit(event)}}
               sx={LogInButtonUI}
               variant='contained'
-              type='submit'
             >
               LOG IN
             </Button>
@@ -157,7 +158,7 @@ const LoginPage = () => {
           </Box>
         </Box>
         <Box sx={{ width: '100%', height: '100%' }}>
-          <Moon />
+          <MoonLoginImage />
         </Box>
       </Box>
     </Box>

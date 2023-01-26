@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Cloud } from '../../../assets/images/Cloud';
+import { SignUpImage} from '../../../assets/images/Cloud';
 import Button from '@mui/material/Button';
 import { GoogleButtonUI, LogInButtonUI } from '../colorButton';
 import GoogleLogo from '../logos/GoogleLogo';
@@ -29,9 +29,9 @@ const SignUpPage = () => {
       email: email,
       password: password,
     });
-    console.log(response, 'response');
+    return response;
   };
-  const onSubmit = handleSubmit((data) => console.log(data));
+  const onSubmit = handleSubmit((data) => {return(data)});
   const signUpScreen = {
     backgroundColor: '#fbeeee',
     width: '100%',
@@ -74,7 +74,6 @@ const SignUpPage = () => {
       >
         <Box sx={{ backgroundColor: 'white' }}>
           <Box
-            onSubmit={onSubmit}
             component='form'
             sx={{
               ...displayScreen,
@@ -168,10 +167,9 @@ const SignUpPage = () => {
             )}
 
             <Button
-              onClick={() => handleSignUp()}
+              onClick={(event) => {handleSignUp();onSubmit(event)}}
               sx={LogInButtonUI}
               variant='contained'
-              type='submit'
             >
               SIGN UP
             </Button>
@@ -181,7 +179,7 @@ const SignUpPage = () => {
           </Box>
         </Box>
         <Box>
-          <Cloud />
+          <SignUpImage/>
         </Box>
       </Box>
     </Box>
