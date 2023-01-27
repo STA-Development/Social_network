@@ -23,18 +23,15 @@ const LoginPage = () => {
     formState: { errors },
   } = useForm();
 
-  const handleLogin = async () => {
-
+  const handleLogin = handleSubmit(async (data) => {
     const response = await login({
       email: email,
       password: password,
     });
     localStorage.setItem('accessToken', response.data.token);
-  };
+    return(data)
+  })
 
-  const onSubmit = handleSubmit((data) => {
-
-    return(data)})
   const loginScreen = {
     backgroundColor: colors.lightRed,
     width: '100%',
@@ -145,7 +142,7 @@ const LoginPage = () => {
             <Typography>Forget Password</Typography>
 
             <Button
-              onClick={(event) => {handleLogin(); onSubmit(event)}}
+              onClick={(event) => { handleLogin(event)}}
               sx={LogInButtonUI}
               variant='contained'
             >

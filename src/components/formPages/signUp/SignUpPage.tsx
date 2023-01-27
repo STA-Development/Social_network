@@ -22,7 +22,7 @@ const SignUpPage = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const handleSignUp = async () => {
+  const handleSignUp = handleSubmit(async () => {
     const response = await createUsers({
       first_name: firstName,
       last_name: lastName,
@@ -30,8 +30,7 @@ const SignUpPage = () => {
       password: password,
     });
     return response;
-  };
-  const onSubmit = handleSubmit((data) => {return(data)});
+  })
   const signUpScreen = {
     backgroundColor: '#fbeeee',
     width: '100%',
@@ -167,7 +166,7 @@ const SignUpPage = () => {
             )}
 
             <Button
-              onClick={(event) => {handleSignUp();onSubmit(event)}}
+              onClick={() => {handleSignUp()}}
               sx={LogInButtonUI}
               variant='contained'
             >
