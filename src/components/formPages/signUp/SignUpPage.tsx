@@ -3,7 +3,7 @@ import { SignUpImage} from '../../../assets/images/Cloud';
 import Button from '@mui/material/Button';
 import { GoogleButtonUI, LogInButtonUI } from '../colorButton';
 import GoogleLogo from '../logos/GoogleLogo';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from "react-router-dom";
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -11,12 +11,18 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { createUsers } from '../../axios/api';
 import { Divider, Stack } from '@mui/material';
-
+import SweetAlert2 from 'react-sweetalert2';
+import { colors, position } from "../../../assets/variables";
 const SignUpPage = () => {
+
   const [firstName, setFirstName] = useState<string>('');
   const [lastName, setLastName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const [swalProps, setSwalProps] = useState({});
+
+  const navigate = useNavigate()
+
   const {
     register,
     handleSubmit,
@@ -29,19 +35,22 @@ const SignUpPage = () => {
       email: email,
       password: password,
     });
+    setSwalProps({
+      icon:'success',
+      text: 'Your account has been successfully created ! ',
+      show: true,
+    })
     return response;
   })
   const signUpScreen = {
-    backgroundColor: '#fbeeee',
+    backgroundColor: colors.lightBlue,
     width: '100%',
     height: '100%',
-    position: 'fixed',
-    top: '0',
-    left: '0',
+    position: position.property,
   };
   const inputFields = {
     width: '70%',
-    height: '85%',
+    height: '90%',
     top: '5%',
     margin: 'auto auto',
     position: 'relative',
@@ -56,7 +65,8 @@ const SignUpPage = () => {
     textAlign: 'center',
     alignItems: 'center',
     justifyContent: 'center',
-    '& > :not(style)': { m: 1 },
+    gap:'10px',
+
   };
   const divider = {
     border: 'none',
@@ -80,7 +90,7 @@ const SignUpPage = () => {
           >
             <Box>
               <Stack spacing={2}>
-                <Typography variant='h4' sx={{ fontSize: '27px', marginTop: '50px' }}>
+                <Typography variant='h4' sx={{ fontSize: '25px', marginTop: '10%' }}>
                   Create Account
                 </Typography>
 
@@ -103,38 +113,39 @@ const SignUpPage = () => {
             <TextField
               required
               id='firstName'
+              error={!!(errors.firstName)}
               label='First Name'
               variant='standard'
+              helperText={errors.firstName && 'FirstName is required!'}
               defaultValue={firstName}
               {...register('firstName', {
                 required: true,
               })}
               onChange={(e) => setFirstName(e.target.value)}
             />
-            {errors.firstName && (
-              <Typography style={{ color: 'red' }}>firstName is required!</Typography>
-            )}
+
 
             <TextField
               required
               id='standard-lastName-required'
+              error={!!(errors.lastName)}
               label='Last Name'
               variant='standard'
+              helperText={errors.lastName && 'LastName is required!'}
               defaultValue={lastName}
               {...register('lastName', {
                 required: true,
               })}
               onChange={(e) => setLastName(e.target.value)}
             />
-            {errors.lastName && (
-              <Typography style={{ color: 'red' }}>lastName is required!</Typography>
-            )}
             <TextField
               required
               id='standard-email-required'
+              error={!!(errors.email)}
               label='Email'
               defaultValue={email}
               variant='standard'
+              helperText={errors.email && 'Email is required!'}
               {...register('email', {
                 required: true,
                 pattern:
@@ -142,31 +153,25 @@ const SignUpPage = () => {
               })}
               onChange={(e) => setEmail(e.target.value)}
             />
-            {errors.email && (
-              <Typography style={{ color: 'red' }}>Correct email is required!</Typography>
-            )}
+
             <TextField
               id='standard-password-input'
+              error={!!(errors.password)}
               label='Password'
               defaultValue={password}
               type='password'
               autoComplete='current-password'
               variant='standard'
+              helperText={errors.password && 'Password is required!'}
               {...register('password', {
                 required: true,
                 pattern: /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
               })}
               onChange={(e) => setPassword(e.target.value)}
             />
-            {errors.password && (
-              <Typography style={{ color: 'red' }}>
-                Password must contain at least one number and one uppercase and lowercase letter,
-                and at least 8 or more characters" !
-              </Typography>
-            )}
 
             <Button
-              onClick={() => {handleSignUp()}}
+              onClick={() => handleSignUp()}
               sx={LogInButtonUI}
               variant='contained'
             >
@@ -180,6 +185,7 @@ const SignUpPage = () => {
         <Box>
           <SignUpImage/>
         </Box>
+        <SweetAlert2 onConfirm={() => navigate('/')} {...swalProps} />
       </Box>
     </Box>
   );

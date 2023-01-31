@@ -5,16 +5,13 @@ export const padding = {
  top: '10px',
 };
 export const position = {
-  property : 'fixed',
-  top : '0',
-  left : '0',
+  property : 'absolute',
 }
-
 export const colors = {
   black: '#131924',
   white: '#ffffff',
   lightRed :'#fbeeee',
-
+  lightBlue: '#f7fbfc',
 };
 export const borders = {
   b1: '1px',

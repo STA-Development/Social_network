@@ -29,6 +29,7 @@ const LoginPage = () => {
       password: password,
     });
     localStorage.setItem('accessToken', response.data.token);
+
     return(data)
   })
 
@@ -37,12 +38,11 @@ const LoginPage = () => {
     width: '100%',
     height: '100%',
     position: position.property,
-    top: position.top,
-    left: position.left,
+
   };
   const displayScreen = {
     width: '70%',
-    height: '85%',
+    height: '90%',
     top: '5%',
     margin: 'auto auto',
     position: 'relative',
@@ -58,8 +58,8 @@ const LoginPage = () => {
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: '50px',
-    gap: '10px',
-    '& > :not(style)': { m: 1 },
+    gap: '20px',
+
   };
   const divider = {
     border: 'none',
@@ -89,7 +89,7 @@ const LoginPage = () => {
             autoComplete='off'
           >
             <Typography variant='h4' sx={{ fontSize: '30px' }}>
-              Welcome Back, User
+              Welcome Back
             </Typography>
             <Typography>Welcome Back ! Please enter your details</Typography>
 
@@ -109,9 +109,11 @@ const LoginPage = () => {
             <TextField
               className='TextFieldColor'
               id='standard-email-required'
+              error={!!(errors.email)}
               label='Email'
               variant='standard'
               defaultValue={email}
+              helperText={errors.email && 'Email is required!'}
               {...register('email', {
                 required: true,
                 pattern:
@@ -119,12 +121,10 @@ const LoginPage = () => {
               })}
               onChange={(e) => setEmail(e.target.value)}
             />
-            {errors.email && (
-              <Typography style={{ color: 'red' }}>Email address is not correct!</Typography>
-            )}
 
             <TextField
               id='standard-password-input'
+              error={!!(errors.password)}
               label='Password'
               type='password'
               autoComplete='current-password'
@@ -136,13 +136,11 @@ const LoginPage = () => {
               })}
               onChange={(e) => setPassword(e.target.value)}
             />
-            {errors.password && (
-              <Typography style={{ color: 'red' }}>Password is not correct!</Typography>
-            )}
+
             <Typography>Forget Password</Typography>
 
             <Button
-              onClick={(event) => { handleLogin(event)}}
+              onClick={(event) =>  handleLogin(event) }
               sx={LogInButtonUI}
               variant='contained'
             >
