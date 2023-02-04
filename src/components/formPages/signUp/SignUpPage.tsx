@@ -10,9 +10,10 @@ import Typography from '@mui/material/Typography';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { createUsers } from '../../axios/api';
-import { Divider, Stack } from '@mui/material';
+import { Stack } from '@mui/material';
 import SweetAlert2 from 'react-sweetalert2';
-import { colors, position } from "../../../assets/variables";
+import { regex} from "../../../assets/variables";
+import {InputFields, SignUpScreenStyle,DisplayScreen,StyleDivider } from "../../../assets/styles/signUp.style";
 const SignUpPage = () => {
 
   const [firstName, setFirstName] = useState<string>('');
@@ -29,65 +30,29 @@ const SignUpPage = () => {
     formState: { errors },
   } = useForm();
   const handleSignUp = handleSubmit(async () => {
-    const response = await createUsers({
-      first_name: firstName,
-      last_name: lastName,
-      email: email,
-      password: password,
-    });
-    setSwalProps({
-      icon:'success',
-      text: 'Your account has been successfully created ! ',
-      show: true,
-    })
-    return response;
+    try {
+      const response = await createUsers({
+        first_name: firstName,
+        last_name: lastName,
+        email: email,
+        password: password,
+      });
+      setSwalProps({
+        icon: 'success',
+        text: 'Your account has been successfully created ! ',
+        show: true,
+      })
+      return response;
+    }
+    catch(error){
+      return error;
+    }
   })
-  const signUpScreen = {
-    backgroundColor: colors.lightBlue,
-    width: '100%',
-    height: '100%',
-    position: position.property,
-  };
-  const inputFields = {
-    width: '70%',
-    height: '90%',
-    top: '5%',
-    margin: 'auto auto',
-    position: 'relative',
-    background: 'white',
-    display: 'grid',
-    gridTemplateColumns: '40% 60%',
-    gridAutoRows: '100%',
-  };
-  const displayScreen = {
-    display: 'flex',
-    flexDirection: 'column',
-    textAlign: 'center',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap:'10px',
-
-  };
-  const divider = {
-    border: 'none',
-    borderTop: '1px solid #333',
-    alignItems: 'center',
-    width: '60%',
-  };
   return (
-    <Box sx={{ ...signUpScreen }}>
-      <Box
-        sx={{
-          ...inputFields,
-        }}
-      >
+    <SignUpScreenStyle>
+     <InputFields>
         <Box sx={{ backgroundColor: 'white' }}>
-          <Box
-            component='form'
-            sx={{
-              ...displayScreen,
-            }}
-          >
+          <DisplayScreen>
             <Box>
               <Stack spacing={2}>
                 <Typography variant='h4' sx={{ fontSize: '25px', marginTop: '10%' }}>
@@ -104,11 +69,9 @@ const SignUpPage = () => {
               </Button>
             </Box>
 
-            <Divider
-              sx={{
-                ...divider,
-              }}
-            />
+          <StyleDivider>
+          </StyleDivider>
+
 
             <TextField
               required
@@ -149,7 +112,7 @@ const SignUpPage = () => {
               {...register('email', {
                 required: true,
                 pattern:
-                  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                 regex.emailPattern
               })}
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -165,7 +128,7 @@ const SignUpPage = () => {
               helperText={errors.password && 'Password is required!'}
               {...register('password', {
                 required: true,
-                pattern: /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
+                pattern: regex.passwordPattern,
               })}
               onChange={(e) => setPassword(e.target.value)}
             />
@@ -180,14 +143,14 @@ const SignUpPage = () => {
             <Typography>
               Already have an account ? <Link to='/'>Sign in </Link>{' '}
             </Typography>
-          </Box>
+          </DisplayScreen>
         </Box>
         <Box>
           <SignUpImage/>
         </Box>
         <SweetAlert2 onConfirm={() => navigate('/')} {...swalProps} />
-      </Box>
-    </Box>
+     </InputFields>
+    </SignUpScreenStyle>
   );
 };
 export default SignUpPage;

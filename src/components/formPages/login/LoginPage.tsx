@@ -9,10 +9,9 @@ import Typography from '@mui/material/Typography';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { login } from '../../axios/api';
-import { Divider } from '@mui/material';
 import { MoonLoginImage } from '../../../assets/images/Moon';
-import { colors, position } from "../../../assets/variables";
-
+import {regex} from "../../../assets/variables";
+import {LoginScreenStyle, DisplayScreen, SubmitDisplay, StyleDivider} from "../../../assets/styles/login.style";
 
 const LoginPage = () => {
   const [email, setEmail] = useState<string>('');
@@ -24,69 +23,25 @@ const LoginPage = () => {
   } = useForm();
 
   const handleLogin = handleSubmit(async (data) => {
+    try {
     const response = await login({
       email: email,
       password: password,
     });
-    localStorage.setItem('accessToken', response.data.token);
 
-    return(data)
-  })
-
-  const loginScreen = {
-    backgroundColor: colors.lightRed,
-    width: '100%',
-    height: '100%',
-    position: position.property,
-
-  };
-  const displayScreen = {
-    width: '70%',
-    height: '90%',
-    top: '5%',
-    margin: 'auto auto',
-    position: 'relative',
-    background: 'white',
-    display: 'grid',
-    gridTemplateColumns: '40% 60%',
-    gridAutoRows: '100%',
-  };
-  const submitDisplay = {
-    display: 'flex',
-    flexDirection: 'column',
-    textAlign: 'center',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: '50px',
-    gap: '20px',
-
-  };
-  const divider = {
-    border: 'none',
-    borderTop: '1px solid #333',
-    alignItems: 'center',
-    width: '60%',
-  };
-
+      localStorage.setItem('accessToken', response.data.token);
+      return (data)
+    }
+    catch (error){
+      return error;
+    }
+  });
   return (
-    <Box
-      sx={{
-        ...loginScreen,
-      }}
-    >
-      <Box
-        sx={{
-          ...displayScreen,
-        }}
-      >
+    <LoginScreenStyle>
+      <DisplayScreen>
         <Box sx={{ backgroundColor: 'white' }}>
-          <Box
+          <SubmitDisplay
             component='form'
-            sx={{
-              ...submitDisplay,
-            }}
-            noValidate
-            autoComplete='off'
           >
             <Typography variant='h4' sx={{ fontSize: '30px' }}>
               Welcome Back
@@ -100,11 +55,8 @@ const LoginPage = () => {
               </Box>
             </Button>
 
-            <Divider
-              sx={{
-                ...divider,
-              }}
-            />
+            <StyleDivider>
+            </StyleDivider>
 
             <TextField
               className='TextFieldColor'
@@ -116,8 +68,7 @@ const LoginPage = () => {
               helperText={errors.email && 'Email is required!'}
               {...register('email', {
                 required: true,
-                pattern:
-                  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                pattern: regex.emailPattern,
               })}
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -132,7 +83,7 @@ const LoginPage = () => {
               defaultValue={password}
               {...register('password', {
                 required: true,
-                pattern: /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
+                pattern: regex.passwordPattern,
               })}
               onChange={(e) => setPassword(e.target.value)}
             />
@@ -150,13 +101,13 @@ const LoginPage = () => {
             <Typography>
               Don't have an account ? <Link to='/SignUpPage'> Sign up </Link>
             </Typography>
-          </Box>
+          </SubmitDisplay>
         </Box>
         <Box sx={{ width: '100%', height: '100%' }}>
           <MoonLoginImage />
         </Box>
-      </Box>
-    </Box>
+      </DisplayScreen>
+    </LoginScreenStyle>
   );
 };
 
