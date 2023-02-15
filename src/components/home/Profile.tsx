@@ -12,25 +12,6 @@ import {display} from "../../assets/variables";
 const ProfilePage = () => {
     const [userInfo, setuserInfo] = useState<Blob | MediaSource>(new Blob([], {}))
 
-
-    // const handleSubmit = async (e:any) => {
-    //     e.preventDefault()
-    //     let formData = new FormData()
-    //     formData.append('file', userInfo)
-    //     await fetch('http://localhost:5000/api/usersInformation/profile/images', {
-    //         method: 'POST',
-    //         body: formData,
-    //     })
-    // }
-    //
-    // const handleInputChange = (e: any) => {
-    //     const img = {
-    //         preview: URL.createObjectURL(e.target.files[0]),
-    //         data: e.target.files[0],
-    //     }
-    //     setuserInfo(img)
-    // }
-
     const handleInputChange = (e : any)=> {
         setuserInfo(e.target.files[0]);
     }

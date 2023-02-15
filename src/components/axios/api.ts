@@ -5,6 +5,6 @@ export const createUsers = async (usersInfo: Users) => {
   return await axios.post(`${process.env.REACT_APP_URL}usersInformation/signup`, usersInfo);
 };
 
-export const login = async (usersInfo: loginUsers) => {
-  return await axios.post(`${process.env.REACT_APP_URL}usersInformation/login}`, usersInfo);
+export const login = async (usersInfo: loginUsers , config : any) => {
+  return await axios.post(`${process.env.REACT_APP_URL}usersInformation/login`, usersInfo);
 };

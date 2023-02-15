@@ -6,7 +6,6 @@ const instance = axios.create({
     'Content-Type': 'text/json',
   },
 });
-
 instance.interceptors.request.use((config) => {
   const token = localStorage.accessToken;
   if (config.headers) {
@@ -14,3 +13,6 @@ instance.interceptors.request.use((config) => {
   }
   return config;
 });
+export const updateProfile = async(token : string) => {
+return await axios.patch(`http://localhost:5000/api/usersInformation/public${token}/profile/images/`)
+}
