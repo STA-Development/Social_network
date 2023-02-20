@@ -3,6 +3,7 @@ import Box from "@mui/material/Box";
 import {borders, colors, display, margin} from "../variables";
 import Avatar from '@mui/material/Avatar';
 import Typography from "@mui/material/Typography";
+import Button from '@mui/material/Button';
 
 export const CoverImage = styled(Box)({
     width: '80%',
@@ -12,6 +13,7 @@ export const CoverImage = styled(Box)({
     display : display.grid,
     gridTemplateColumns:'20px 20px 20px',
     margin: margin.auto,
+    position: "relative",
 });
 export const ProfileImage = styled(Avatar)({
     width: 180,
@@ -35,4 +37,10 @@ export const AddPost = styled(Box)({
 export const HeaderName = styled(Typography)({
 
     position: "absolute", left: '260px', top: '20px', fontFamily: "sans-serif"
+})
+export const CoverImg = styled("img")({
+    width:"100%",height:"100%",position:"absolute",objectFit:"cover"
+})
+export const CoverButton = styled(Button)({
+    color: "#21130d", backgroundColor: "#ffffff","&:hover" : {backgroundColor: "#ffffff"},fontFamily: "sans-serif"
 })

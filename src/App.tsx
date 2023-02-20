@@ -5,6 +5,7 @@ import SignUpPage from './components/formPages/signUp/SignUpPage';
 import ProfilePage from "./components/home/Profile";
 
 
+
 function App() {
     return (
         <BrowserRouter>

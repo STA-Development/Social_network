@@ -9,7 +9,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { createUsers } from '../../axios/api';
+import { createUsers } from '../../axios/axiosForms';
 import { Stack } from '@mui/material';
 import SweetAlert2 from 'react-sweetalert2';
 import { regex} from "../../../assets/variables";

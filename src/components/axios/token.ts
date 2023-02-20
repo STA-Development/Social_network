@@ -1,5 +1,4 @@
 import axios from 'axios';
-
 const instance = axios.create({
   baseURL: process.env.REACT_APP_URL,
   headers: {
@@ -13,6 +12,5 @@ instance.interceptors.request.use((config) => {
   }
   return config;
 });
-export const updateProfile = async(token : string) => {
-return await axios.patch(`http://localhost:5000/api/usersInformation/public${token}/profile/images/`)
-}
+
+export default instance

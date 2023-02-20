@@ -7,27 +7,17 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { useForm } from 'react-hook-form';
-import {useEffect, useState} from 'react';
-import { login } from '../../axios/api';
+import {useState} from 'react';
+import { login } from '../../axios/axiosForms';
 import { MoonLoginImage } from '../../../assets/images/Moon';
 import {regex} from "../../../assets/variables";
 import {LoginScreenStyle, DisplayScreen, SubmitDisplay, StyleDivider} from "../../../assets/styles/login.style";
-//import Loading from "../Loading";
 import { useNavigate} from 'react-router-dom';
 
 const LoginPage = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  //const [loading, setLoading] = useState<boolean>(false);
   const history=useNavigate();
-  useEffect(()=> {
-const userInfo = localStorage.getItem("userInfo")
-     if(userInfo) {
-       history("/ProfilePage");
-     }
-  },[history]);
-
-
 
   const {
     register,
@@ -37,18 +27,16 @@ const userInfo = localStorage.getItem("userInfo")
 
   const handleLogin = handleSubmit(async (data) => {
     try {
-      const config = {
-        headers: {"Content-type": "application/json",}
-      };
-      //setLoading(true)
     const response = await login({
       email: email,
       password: password,
-
-    }, config);
-      //setLoading(false);
+    });
+    const userInfo = JSON.stringify(data)
       localStorage.setItem('accessToken', response.data.token);
-      localStorage.setItem("userInfo", JSON.stringify(data));
+      localStorage.setItem("userInfo", userInfo);
+      if(userInfo) {
+        history("/ProfilePage");
+      }
       return (data);
     }
     catch (error : any){

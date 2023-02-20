@@ -1,10 +1,11 @@
-import axios from 'axios';
-import { Users, loginUsers } from '../model/model';
+import axios from './token';
 
-export const createUsers = async (usersInfo: Users) => {
-  return await axios.post(`${process.env.REACT_APP_URL}usersInformation/signup`, usersInfo);
-};
-
-export const login = async (usersInfo: loginUsers , config : any) => {
-  return await axios.post(`${process.env.REACT_APP_URL}usersInformation/login`, usersInfo);
-};
+export const updateProfile = async(formData: FormData) => {
+  return await axios.patch(`${process.env.REACT_APP_URL}/api/usersInformation/profile`, formData)
+}
+export const updateCover = async(formData: FormData) => {
+  return await axios.patch(`${process.env.REACT_APP_URL}/api/usersInformation/cover`, formData)
+}
+export const getProfileUser = async()=> {
+  return await axios.get(`${process.env.REACT_APP_URL}/api/usersInformation/user`)
+}
