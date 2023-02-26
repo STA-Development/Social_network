@@ -4,6 +4,10 @@ export type Users = {
   email: string;
   password: string;
 };
+export type UsersPhoto = {
+  photo : string;
+  id : number;
+}
 export type loginUsers = {
   email: string;
   password: string;

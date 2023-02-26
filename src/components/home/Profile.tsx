@@ -8,13 +8,18 @@ import {CoverImage, ProfileImage, CameraIcon, AddPost, HeaderName, CoverImg} fro
 import {UserInfo} from "../../assets/modal/modal";
 import { justifyContent, margin, position } from "../../assets/variables";
 import {display} from "../../assets/variables";
-import { updateCover, updateProfile, getProfileUser} from "../axios/api";
+import {updateCover, updateProfile, getProfileUser, getUserPhotos, creatPhotos} from "../axios/api";
+import {UsersPhoto} from "../model/model";
 import {useEffect, useState} from "react";
+import ProfileBody from "./ProfileBody";
 const ProfilePage = () => {
    const [userInfo, setUserInfo] = useState<UserInfo>();
-    const handleProfileInputChange = async (e : any)=> {
+   const [userPhoto, setUserPhoto] = useState<UsersPhoto[]>([]);
+    const [selectedImage, setSelectedImage] = useState<FileList | undefined>()
+    const [uploadImage, setUploadImage] = useState<string>('')
+
+    const handleProfileInputChange = async ( )=> {
         const formData = new FormData();
-        formData.append('ProfileImg', e.target.files[0] as Blob)
         await updateProfile(formData)
         await getProfileData()
     }
@@ -24,22 +29,38 @@ const ProfilePage = () => {
         await updateCover(formData)
         await getProfileData()
     }
+    const handleSendPhoto = async () => {
+        if (selectedImage) {
+            const formData = new FormData();
+            const image = selectedImage.length;
+            for (let i = 0; i < image; i++) {
+                if (selectedImage) {
+                    formData.append('userPhoto', selectedImage[i]);
+                }
+            }
+            await creatPhotos(formData);
+            await getProfileData()
+            setSelectedImage(undefined)
+        }
+    }
+
     useEffect(()=>{
         (async () => {
             await getProfileData();
         })();
-        console.log("asfasfasfaf")
         },[]);
-
    const getProfileData = async () => {
        try {
            const response = await getProfileUser();
+           const PhotoResponse = await getUserPhotos();
            setUserInfo(response.data);
+           setUserPhoto(PhotoResponse.data);
        }
-       catch(e) {
-           console.log(e);
+       catch(error) {
+          return error;
        }
    }
+
     return (
         <Box>
             <Box  sx={{
@@ -49,7 +70,7 @@ const ProfilePage = () => {
             }}>
                 <Box sx={{width: '100%'}}>
                     <CoverImage>
-<CoverImg src = {`${process.env.REACT_APP_URL}${userInfo?.cover_image}`} />
+<CoverImg src = {`${process.env.REACT_APP_URL}${userInfo?.coverImage}`} />
                     </CoverImage>
                 </Box>
                 <Box sx={{ width: '100%'}}>
@@ -62,7 +83,7 @@ const ProfilePage = () => {
                                 </Button>
                             </Box>
                             <Box sx={{position: position.absolute, top: '-35px', left: '50px' }}>
-                                <ProfileImage src = {`${process.env.REACT_APP_URL}${userInfo?.profile_image}`}/>
+                                <ProfileImage src = {`${process.env.REACT_APP_URL}${userInfo?.profileImage}`}/>
                                 <CameraIcon >
                                     <IconButton sx={{ color: "#21130d" }}  aria-label="upload picture" component="label"  >
                                         <input hidden accept="image/*" type="file" name="attr"  onChange={handleProfileInputChange} />
@@ -71,7 +92,9 @@ const ProfilePage = () => {
                                 </CameraIcon>
                             </Box>
                             <AddPost>
-                                <Button variant="contained" component="label">+ Add Post<input hidden accept="image/*" multiple type="file" />
+                                <Button onClick={handleSendPhoto} variant="contained" component="label" >
+
+                                    Add Post
                                 </Button>
                             </AddPost>
 
@@ -81,9 +104,11 @@ const ProfilePage = () => {
                         </Box>
                         <Box sx={{margin: margin.auto}}><Divider /></Box>
                     </Box>
+                    <Box>
+                        <ProfileBody userInfo={userInfo} userPhoto={userPhoto}  setUserPhoto={setUserPhoto} selectedImage={selectedImage} uploadImage={uploadImage} setUploadImage ={setUploadImage} setSelectedImage = {setSelectedImage}/>
+                    </Box>
                 </Box>
             </Box>
-
         </Box>
 
     )

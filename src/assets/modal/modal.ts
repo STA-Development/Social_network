@@ -1,11 +1,11 @@
 export interface UserInfo {
-cover_image : string,
+    coverImage : string,
     created_at : string,
     email : string,
     first_name:string | undefined,
     id : number,
     last_name : string | undefined,
     password : string,
-    profile_image : string,
+    profileImage : string,
     updated_at : string
 }
