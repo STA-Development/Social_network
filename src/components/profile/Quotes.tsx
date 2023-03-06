@@ -12,13 +12,51 @@ import {
 } from '../../assets/styles/ProfileBody.style';
 import { UserContext } from '../../assets/context/userContext';
 import { ContextValue } from '../../assets/context/userContext';
-import TextModal from './modal/TextModal';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
+import { creatPhotos, getUserPhotos, getUsersPosts } from '../axios/api';
 
 const Quotes = () => {
-  const { userInfo, selectedImage, setSelectedImage, handleOpen } = useContext(
+  const { userInfo, selectedImage, setSelectedImage, setUserPhoto, setQuotes } = useContext(
     UserContext,
   ) as ContextValue;
+
+  const [postValue, setPostValue] = useState<string>('');
+
+  const handleSendPhoto = async () => {
+    const formData = new FormData();
+
+    if (selectedImage) {
+      const image = selectedImage.length;
+      for (let i = 0; i < image; i++) {
+        if (selectedImage) {
+          formData.append('userPhoto', selectedImage[i]);
+        }
+      }
+    }
+    formData.append('quotes', postValue);
+
+    await creatPhotos(formData);
+    await getPhotos();
+    setSelectedImage(undefined);
+    setPostValue('');
+  };
+
+  const getPhotos = async () => {
+    try {
+      const Photo = await getUserPhotos();
+      const QuotesResponse = await getUsersPosts();
+      const mergedData = QuotesResponse.data.map((item: { id: number }) => ({
+        ...item,
+        photo: Photo.data.find(
+          (item2: { postId: number; photo: string }) => item2.postId === item.id && item2,
+        )?.photo,
+      }));
+      setUserPhoto(Photo.data);
+      setQuotes(mergedData);
+    } catch (error) {
+      return error;
+    }
+  };
 
   const handlePreview = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
@@ -55,7 +93,15 @@ const Quotes = () => {
       <Box sx={{ padding: '20px 10px' }}>
         <Box sx={{ display: 'flex', gap: '10px' }}>
           <Avatar src={`${process.env.REACT_APP_URL}${userInfo?.profileImage}`} />
-          <TextPost onClick={handleOpen} />
+          <TextPost value={postValue} onChange={(e) => setPostValue(e.target.value)} />
+          <Button
+            sx={{ height: '40px', width: '80px' }}
+            onClick={handleSendPhoto}
+            variant='contained'
+            component='label'
+          >
+            Add
+          </Button>
         </Box>
         <Box>
           <Divider sx={{ paddingTop: '20px' }} />
@@ -102,7 +148,6 @@ const Quotes = () => {
             )}
         </PrevPhotosDiv>
       </Box>
-      <TextModal />
     </UploadDiv>
   );
 };

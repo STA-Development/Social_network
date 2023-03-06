@@ -6,6 +6,8 @@ export type quotesType = {
   id: number;
   userId: number;
   quotes: string;
+  photo: string;
+  profileImage: string;
 };
 export type ContextValue = {
   userInfo: UserInfo | undefined;
@@ -34,7 +36,6 @@ export const UserContextProvider: FC<Props> = ({ children }) => {
   const handleOpen = () => setOpen(true);
   const [quotes, setQuotes] = useState<quotesType[] | undefined>([]);
   const handleClose = () => setOpen(false);
-
   return (
     <UserContext.Provider
       value={{

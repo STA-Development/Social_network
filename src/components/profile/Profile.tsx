@@ -8,7 +8,6 @@ import {
   CoverImage,
   ProfileImage,
   CameraIcon,
-  AddPost,
   HeaderName,
   CoverImg,
 } from '../../assets/styles/profile.style';
@@ -19,22 +18,15 @@ import {
   updateProfile,
   getProfileUser,
   getUserPhotos,
-  creatPhotos,
   getUsersPosts,
 } from '../axios/api';
 import { useContext, useEffect } from 'react';
 import ProfileBody from './ProfileBody';
 import { ContextValue, UserContext } from '../../assets/context/userContext';
 const ProfilePage = () => {
-  const {
-    selectedImage,
-    setSelectedImage,
-    userInfo,
-    setUserInfo,
-    setUserPhoto,
-    setQuotes,
-    quotes,
-  } = useContext(UserContext) as ContextValue;
+  const { userInfo, setUserInfo, setUserPhoto, setQuotes } = useContext(
+    UserContext,
+  ) as ContextValue;
 
   const handleProfileInputChange = async () => {
     const formData = new FormData();
@@ -50,20 +42,6 @@ const ProfilePage = () => {
       await getProfileData();
     }
   };
-  const handleSendPhoto = async () => {
-    if (selectedImage) {
-      const formData = new FormData();
-      const image = selectedImage.length;
-      for (let i = 0; i < image; i++) {
-        if (selectedImage) {
-          formData.append('userPhoto', selectedImage[i]);
-        }
-      }
-      await creatPhotos(formData);
-      await getProfileData();
-      setSelectedImage(undefined);
-    }
-  };
 
   useEffect(() => {
     (async () => {
@@ -75,10 +53,16 @@ const ProfilePage = () => {
       const response = await getProfileUser();
       const PhotoResponse = await getUserPhotos();
       const QuotesResponse = await getUsersPosts();
+
+      const mergedData = QuotesResponse.data.map((item: { id: number }) => ({
+        ...item,
+        photo: PhotoResponse.data.find(
+          (item2: { postId: number; photo: string }) => item2.postId === item.id && item2,
+        )?.photo,
+      }));
       setUserInfo(response.data);
       setUserPhoto(PhotoResponse.data);
-      setQuotes(QuotesResponse.data);
-      console.log(quotes, '1111');
+      setQuotes(mergedData);
     } catch (error) {
       return error;
     }
@@ -143,11 +127,6 @@ const ProfilePage = () => {
                   </IconButton>
                 </CameraIcon>
               </Box>
-              <AddPost>
-                <Button onClick={handleSendPhoto} variant='contained' component='label'>
-                  Add Post
-                </Button>
-              </AddPost>
 
               <Box>
                 <HeaderName variant='h3'>
