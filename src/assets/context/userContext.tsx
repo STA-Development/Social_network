@@ -22,6 +22,12 @@ export type ContextValue = {
   handleClose: () => void;
   quotes: quotesType[] | undefined;
   setQuotes: Dispatch<React.SetStateAction<quotesType[] | undefined>>;
+  loading: boolean;
+  setLoading: Dispatch<React.SetStateAction<boolean>>;
+  error: boolean;
+  setError: Dispatch<React.SetStateAction<boolean>>;
+  photos: { photo: string }[];
+  setPhotos: Dispatch<React.SetStateAction<{ photo: string }[]>>;
 };
 type Props = {
   children: ReactNode;
@@ -35,6 +41,9 @@ export const UserContextProvider: FC<Props> = ({ children }) => {
   const [open, setOpen] = useState<boolean>(false);
   const handleOpen = () => setOpen(true);
   const [quotes, setQuotes] = useState<quotesType[] | undefined>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [photos, setPhotos] = useState<{ photo: string }[]>([]);
   const handleClose = () => setOpen(false);
   return (
     <UserContext.Provider
@@ -51,6 +60,12 @@ export const UserContextProvider: FC<Props> = ({ children }) => {
         handleClose,
         quotes,
         setQuotes,
+        loading,
+        setLoading,
+        error,
+        setError,
+        photos,
+        setPhotos,
       }}
     >
       {children}

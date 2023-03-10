@@ -4,7 +4,6 @@ import { ContextValue, UserContext } from '../../assets/context/userContext';
 import * as React from 'react';
 import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
-
 const Posts = () => {
   const { quotes, userInfo } = useContext(UserContext) as ContextValue;
   return (
@@ -20,13 +19,20 @@ const Posts = () => {
                     height: 'auto',
                     width: '100%',
                     display: 'grid',
-                    paddingLeft: '8px',
                     borderRadius: '10px',
                     marginTop: '30px',
                   }}
                   key={index}
                 >
-                  <Box sx={{ display: 'flex', gap: '3px', alignItems: 'center' }}>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      gap: '3px',
+                      alignItems: 'center',
+                      paddingTop: '20px',
+                      paddingLeft: '10px',
+                    }}
+                  >
                     <Avatar src={`${process.env.REACT_APP_URL}${userInfo?.profileImage}`} />
                     <Typography
                       id='modal-modal-title'
@@ -38,7 +44,7 @@ const Posts = () => {
                   <Box sx={{ paddingTop: '20px' }}></Box>
                   <Typography
                     id='modal-modal-title'
-                    sx={{ fontFamily: 'sans-serif', fontSize: '20px' }}
+                    sx={{ fontFamily: 'sans-serif', fontSize: '20px', paddingLeft: '15px' }}
                   >
                     {item.quotes}
                   </Typography>
@@ -47,9 +53,8 @@ const Posts = () => {
                     {item.photo && (
                       <Box key={index}>
                         <img
-                          style={{ display: 'block', borderRadius: '10px' }}
-                          width='600px'
-                          height='600px'
+                          width='500px'
+                          height='450px'
                           key={index}
                           alt={item.photo}
                           src={`${process.env.REACT_APP_URL}${item.photo}`}
@@ -57,6 +62,7 @@ const Posts = () => {
                       </Box>
                     )}
                   </Box>
+                  <Box sx={{ paddingBottom: '20px' }}></Box>
                 </Box>
               ))}
           </Box>

@@ -7,17 +7,22 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { useForm } from 'react-hook-form';
-import {useState} from 'react';
+import { useState } from 'react';
 import { login } from '../../axios/axiosForms';
 import { MoonLoginImage } from '../../../assets/images/Moon';
-import {regex} from "../../../assets/variables";
-import {LoginScreenStyle, DisplayScreen, SubmitDisplay, StyleDivider} from "../../../assets/styles/login.style";
-import { useNavigate} from 'react-router-dom';
+import { regex } from '../../../assets/variables';
+import {
+  LoginScreenStyle,
+  DisplayScreen,
+  SubmitDisplay,
+  StyleDivider,
+} from '../../../assets/styles/login.style';
+import { useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const history=useNavigate();
+  const history = useNavigate();
 
   const {
     register,
@@ -27,19 +32,20 @@ const LoginPage = () => {
 
   const handleLogin = handleSubmit(async (data) => {
     try {
-    const response = await login({
-      email: email,
-      password: password,
-    });
-    const userInfo = JSON.stringify(data)
+      const response = await login({
+        email: email,
+        password: password,
+      });
+      const userInfo = JSON.stringify(data);
       localStorage.setItem('accessToken', response.data.token);
-      localStorage.setItem("userInfo", userInfo);
-      if(userInfo) {
-        history("/ProfilePage");
+      localStorage.setItem('userInfo', userInfo);
+      if (userInfo) {
+        history('/ProfilePage');
       }
-      return (data);
-    }
-    catch (error : any){
+      return data;
+    } catch (error) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       throw new Error(error.response.data.message);
     }
   });
@@ -47,9 +53,7 @@ const LoginPage = () => {
     <LoginScreenStyle>
       <DisplayScreen>
         <Box sx={{ backgroundColor: 'white' }}>
-          <SubmitDisplay
-            component='form'
-          >
+          <SubmitDisplay component='form'>
             <Typography variant='h4' sx={{ fontSize: '30px' }}>
               Welcome Back
             </Typography>
@@ -62,13 +66,12 @@ const LoginPage = () => {
               </Box>
             </Button>
 
-            <StyleDivider>
-            </StyleDivider>
+            <StyleDivider></StyleDivider>
 
             <TextField
               className='TextFieldColor'
               id='standard-email-required'
-              error={!!(errors.email)}
+              error={!!errors.email}
               label='Email'
               variant='standard'
               defaultValue={email}
@@ -82,7 +85,7 @@ const LoginPage = () => {
 
             <TextField
               id='standard-password-input'
-              error={!!(errors.password)}
+              error={!!errors.password}
               label='Password'
               type='password'
               autoComplete='current-password'
@@ -97,11 +100,7 @@ const LoginPage = () => {
 
             <Typography>Forget Password</Typography>
 
-            <Button
-              onClick={(event) =>  handleLogin(event) }
-              sx={LogInButtonUI}
-              variant='contained'
-            >
+            <Button onClick={(event) => handleLogin(event)} sx={LogInButtonUI} variant='contained'>
               LOG IN
             </Button>
 

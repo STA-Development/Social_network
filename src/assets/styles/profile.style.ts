@@ -5,8 +5,8 @@ import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 
 export const CoverImage = styled(Box)({
-  width: '80%',
-  height: 500,
+  width: '58%',
+  height: '550px',
   backgroundColor: colors.lightGray,
   borderRadius: borders.coverRadius,
   display: display.grid,
@@ -15,8 +15,8 @@ export const CoverImage = styled(Box)({
   position: 'relative',
 });
 export const ProfileImage = styled(Avatar)({
-  width: 180,
-  height: 180,
+  width: 160,
+  height: 160,
   borderRadius: borders.circleRadius,
 });
 export const CameraIcon = styled(Avatar)({
@@ -38,7 +38,7 @@ export const AddPost = styled(Box)({
 });
 export const HeaderName = styled(Typography)({
   position: 'absolute',
-  left: '260px',
+  left: '450px',
   top: '20px',
   fontFamily: 'sans-serif',
 });

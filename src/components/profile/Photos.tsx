@@ -1,15 +1,13 @@
 import { Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import * as React from 'react';
-import ImageList from '@mui/material/ImageList';
-import ImageListItem from '@mui/material/ImageListItem';
-import { PhotoDiv, PhotosDisplay } from '../../assets/styles/ProfileBody.style';
-import { ContextValue, UserContext } from '../../assets/context/userContext';
+import { PhotoDiv } from '../../assets/styles/ProfileBody.style';
 import { useContext } from 'react';
+//import { getLimitedPhotos } from '../axios/api';
+import { ContextValue, UserContext } from '../../assets/context/userContext';
 
 const Photos = () => {
-  const { userPhoto } = useContext(UserContext) as ContextValue;
-
+  const { photos } = useContext(UserContext) as ContextValue;
   return (
     <Box>
       <Box sx={{ alignItems: 'center' }}>
@@ -20,24 +18,20 @@ const Photos = () => {
             </Typography>
           </Box>
           <Box sx={{ paddingTop: '5px' }}></Box>
-          <PhotosDisplay>
-            <ImageList sx={{ width: 500, height: 200 }} cols={3} rowHeight={200}>
-              <>
-                {userPhoto?.map((item, index) => (
-                  <ImageListItem key={index}>
-                    <img
-                      style={{ display: 'block', borderRadius: '20px' }}
-                      width='160px'
-                      height='140px'
-                      key={index}
-                      alt={item.photo}
-                      src={`${process.env.REACT_APP_URL}${item.photo}`}
-                    />
-                  </ImageListItem>
-                ))}
-              </>
-            </ImageList>
-          </PhotosDisplay>
+          <Box sx={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+            {photos?.map((item, index) => (
+              <Box>
+                <img
+                  style={{ borderRadius: '20px' }}
+                  width='104.67px'
+                  height='105px'
+                  key={index}
+                  alt={item.photo}
+                  src={`${process.env.REACT_APP_URL}${item.photo}`}
+                />
+              </Box>
+            ))}
+          </Box>
         </PhotoDiv>
         <Box sx={{ padding: '6px' }}></Box>
       </Box>

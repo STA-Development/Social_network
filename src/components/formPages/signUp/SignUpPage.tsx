@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { SignUpImage} from '../../../assets/images/Cloud';
+import { SignUpImage } from '../../../assets/images/Cloud';
 import Button from '@mui/material/Button';
 import { GoogleButtonUI, LogInButtonUI } from '../colorButton';
 import GoogleLogo from '../logos/GoogleLogo';
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -12,17 +12,21 @@ import { useForm } from 'react-hook-form';
 import { createUsers } from '../../axios/axiosForms';
 import { Stack } from '@mui/material';
 import SweetAlert2 from 'react-sweetalert2';
-import { regex} from "../../../assets/variables";
-import {InputFields, SignUpScreenStyle,DisplayScreen,StyleDivider } from "../../../assets/styles/signUp.style";
+import { regex } from '../../../assets/variables';
+import {
+  InputFields,
+  SignUpScreenStyle,
+  DisplayScreen,
+  StyleDivider,
+} from '../../../assets/styles/signUp.style';
 const SignUpPage = () => {
-
   const [firstName, setFirstName] = useState<string>('');
   const [lastName, setLastName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [swalProps, setSwalProps] = useState({});
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const {
     register,
@@ -41,16 +45,15 @@ const SignUpPage = () => {
         icon: 'success',
         text: 'Your account has been successfully created ! ',
         show: true,
-      })
+      });
       return response;
-    }
-    catch(error){
+    } catch (error) {
       return error;
     }
-  })
+  });
   return (
     <SignUpScreenStyle>
-     <InputFields>
+      <InputFields>
         <Box sx={{ backgroundColor: 'white' }}>
           <DisplayScreen>
             <Box>
@@ -69,14 +72,12 @@ const SignUpPage = () => {
               </Button>
             </Box>
 
-          <StyleDivider>
-          </StyleDivider>
-
+            <StyleDivider></StyleDivider>
 
             <TextField
               required
               id='firstName'
-              error={!!(errors.firstName)}
+              error={!!errors.firstName}
               label='First Name'
               variant='standard'
               helperText={errors.firstName && 'FirstName is required!'}
@@ -87,11 +88,10 @@ const SignUpPage = () => {
               onChange={(e) => setFirstName(e.target.value)}
             />
 
-
             <TextField
               required
               id='standard-lastName-required'
-              error={!!(errors.lastName)}
+              error={!!errors.lastName}
               label='Last Name'
               variant='standard'
               helperText={errors.lastName && 'LastName is required!'}
@@ -104,22 +104,21 @@ const SignUpPage = () => {
             <TextField
               required
               id='standard-email-required'
-              error={!!(errors.email)}
+              error={!!errors.email}
               label='Email'
               defaultValue={email}
               variant='standard'
               helperText={errors.email && 'Email is required!'}
               {...register('email', {
                 required: true,
-                pattern:
-                 regex.emailPattern
+                pattern: regex.emailPattern,
               })}
               onChange={(e) => setEmail(e.target.value)}
             />
 
             <TextField
               id='standard-password-input'
-              error={!!(errors.password)}
+              error={!!errors.password}
               label='Password'
               defaultValue={password}
               type='password'
@@ -133,11 +132,7 @@ const SignUpPage = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
 
-            <Button
-              onClick={() => handleSignUp()}
-              sx={LogInButtonUI}
-              variant='contained'
-            >
+            <Button onClick={() => handleSignUp()} sx={LogInButtonUI} variant='contained'>
               SIGN UP
             </Button>
             <Typography>
@@ -146,10 +141,10 @@ const SignUpPage = () => {
           </DisplayScreen>
         </Box>
         <Box>
-          <SignUpImage/>
+          <SignUpImage />
         </Box>
         <SweetAlert2 onConfirm={() => navigate('/')} {...swalProps} />
-     </InputFields>
+      </InputFields>
     </SignUpScreenStyle>
   );
 };
