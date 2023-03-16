@@ -15,8 +15,6 @@ import { UserContext } from '../../assets/context/userContext';
 import { ContextValue } from '../../assets/context/userContext';
 import { useContext, useState } from 'react';
 import { creatPhotos, getLimitedPhotos, getUserPhotos, getUsersPosts } from '../axios/api';
-import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
 const Quotes = () => {
   const {
     setPhotos,
@@ -27,13 +25,11 @@ const Quotes = () => {
     setQuotes,
     loading,
     setLoading,
-    open,
     setOpen,
   } = useContext(UserContext) as ContextValue;
 
   const [postValue, setPostValue] = useState<string>('');
   const [postError, setPostError] = useState<boolean>(false);
-  const handleClose = () => setOpen(false);
   const handleSendPhoto = async () => {
     setPostError(false);
     setLoading(true);
@@ -197,33 +193,6 @@ const Quotes = () => {
           </PrevPhotosDiv>
         </Box>
       </Box>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby='modal-modal-title'
-        aria-describedby='modal-modal-description'
-      >
-        <Box
-          sx={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            width: 400,
-            border: '2px solid #000',
-            boxShadow: 24,
-            p: 4,
-            backgroundColor: '#8AFF8A',
-          }}
-        >
-          <Typography id='modal-modal-title' variant='h5' component='h2' sx={{ color: 'green' }}>
-            Success Message
-          </Typography>
-          <Typography id='modal-modal-description' sx={{ mt: 2 }}>
-            Your changes have been successfully changed !
-          </Typography>
-        </Box>
-      </Modal>
     </UploadDiv>
   );
 };

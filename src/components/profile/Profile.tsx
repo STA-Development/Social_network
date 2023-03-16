@@ -4,7 +4,8 @@ import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import { CircularProgress, Divider } from '@mui/material';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
-import Modal from '@mui/material/Modal';
+import { PhotoProvider, PhotoView } from 'react-photo-view';
+import 'react-photo-view/dist/react-photo-view.css';
 import Alert from '@mui/material/Alert';
 import { getLimitedPhotos } from '../axios/api';
 import {
@@ -26,7 +27,7 @@ import {
 import { useContext, useEffect, useState } from 'react';
 import ProfileBody from './ProfileBody';
 import { ContextValue, UserContext } from '../../assets/context/userContext';
-import Typography from '@mui/material/Typography';
+import SuccessModal from './modal/SuccessModal';
 const ProfilePage = () => {
   const {
     userInfo,
@@ -36,12 +37,10 @@ const ProfilePage = () => {
     loading,
     setLoading,
     setPhotos,
-    open,
     setOpen,
   } = useContext(UserContext) as ContextValue;
   const [profileError, setProfileError] = useState<boolean>(false);
   const [coverError, setCoverError] = useState<boolean>(false);
-  const handleClose = () => setOpen(false);
 
   const handleProfileInputChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setProfileError(false);
@@ -122,7 +121,11 @@ const ProfilePage = () => {
       >
         <Box>
           <CoverImage>
-            <CoverImg src={`${process.env.REACT_APP_URL}${userInfo?.coverImage}`} />
+            <PhotoProvider>
+              <PhotoView src={`${process.env.REACT_APP_URL}${userInfo?.coverImage}`}>
+                <CoverImg src={`${process.env.REACT_APP_URL}${userInfo?.coverImage}`} />
+              </PhotoView>
+            </PhotoProvider>
           </CoverImage>
         </Box>
         <Box sx={{ width: '100%' }}>
@@ -156,7 +159,11 @@ const ProfilePage = () => {
                 )}
               </Box>
               <Box sx={{ position: position.absolute, top: '-35px', left: '280px' }}>
-                <ProfileImage src={`${process.env.REACT_APP_URL}${userInfo?.profileImage}`} />
+                <PhotoProvider>
+                  <PhotoView src={`${process.env.REACT_APP_URL}${userInfo?.profileImage}`}>
+                    <ProfileImage src={`${process.env.REACT_APP_URL}${userInfo?.profileImage}`} />
+                  </PhotoView>
+                </PhotoProvider>
                 <CameraIcon>
                   {loading ? (
                     <CircularProgress />
@@ -200,34 +207,7 @@ const ProfilePage = () => {
           </Box>
         </Box>
       </Box>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby='modal-modal-title'
-        aria-describedby='modal-modal-description'
-      >
-        <Box
-          sx={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            width: 400,
-            bgcolor: 'background.paper',
-            border: '2px solid #000',
-            boxShadow: 24,
-            p: 4,
-            backgroundColor: '#8AFF8A',
-          }}
-        >
-          <Typography id='modal-modal-title' variant='h5' component='h2' sx={{ color: 'green' }}>
-            Success Message
-          </Typography>
-          <Typography id='modal-modal-description' sx={{ mt: 2 }}>
-            Your changes have been successfully changed !
-          </Typography>
-        </Box>
-      </Modal>
+      <SuccessModal />
     </Box>
   );
 };

@@ -2,13 +2,8 @@ import React, { Dispatch, FC, ReactNode, useState } from 'react';
 import { createContext } from 'react';
 import { UserInfo } from '../model/model';
 import { UsersPhoto } from '../../components/model/model';
-export type quotesType = {
-  id: number;
-  userId: number;
-  quotes: string;
-  photo: string;
-  profileImage: string;
-};
+import { quotesType } from '../model/model';
+
 export type ContextValue = {
   userInfo: UserInfo | undefined;
   userPhoto: UsersPhoto[] | undefined;

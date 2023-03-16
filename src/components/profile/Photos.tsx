@@ -3,7 +3,8 @@ import Box from '@mui/material/Box';
 import * as React from 'react';
 import { PhotoDiv } from '../../assets/styles/ProfileBody.style';
 import { useContext } from 'react';
-//import { getLimitedPhotos } from '../axios/api';
+import { PhotoProvider, PhotoView } from 'react-photo-view';
+
 import { ContextValue, UserContext } from '../../assets/context/userContext';
 
 const Photos = () => {
@@ -18,20 +19,21 @@ const Photos = () => {
             </Typography>
           </Box>
           <Box sx={{ paddingTop: '5px' }}></Box>
-          <Box sx={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
-            {photos?.map((item, index) => (
-              <Box>
-                <img
-                  style={{ borderRadius: '20px' }}
-                  width='104.67px'
-                  height='105px'
-                  key={index}
-                  alt={item.photo}
-                  src={`${process.env.REACT_APP_URL}${item.photo}`}
-                />
-              </Box>
-            ))}
-          </Box>
+          <PhotoProvider>
+            <Box sx={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+              {photos?.map((item, index) => (
+                <PhotoView key={index} src={`${process.env.REACT_APP_URL}${item.photo}`}>
+                  <img
+                    style={{ borderRadius: '20px' }}
+                    width='104.67px'
+                    height='105px'
+                    alt={item.photo}
+                    src={`${process.env.REACT_APP_URL}${item.photo}`}
+                  />
+                </PhotoView>
+              ))}
+            </Box>
+          </PhotoProvider>
         </PhotoDiv>
         <Box sx={{ padding: '6px' }}></Box>
       </Box>

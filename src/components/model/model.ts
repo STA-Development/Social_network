@@ -5,9 +5,10 @@ export type Users = {
   password: string;
 };
 export type UsersPhoto = {
-  photo : string;
-  id : number;
-}
+  photo: string;
+  id: number;
+  postId: number;
+};
 export type loginUsers = {
   email: string;
   password: string;
