@@ -14,12 +14,10 @@ export type quotesType = {
   userId: number;
   liked: boolean;
   quotes: string;
-  date: string;
   photos: onePhoto[];
   profileImage: string;
-  created_at: string;
+  date: string;
 };
-
 export type onePhoto = {
   created_at: string;
   id: number;

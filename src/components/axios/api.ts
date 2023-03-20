@@ -24,11 +24,20 @@ export const getLimitedPhotos = async () => {
   return await axios.get(`${process.env.REACT_APP_URL}/api/usersInformation/limitedPhotos`);
 };
 export const getUsersPosts = async (take = 2) => {
-  const page = 1;
   return await axiosText.get(
-    `${process.env.REACT_APP_URL}/api/usersInformation/showPosts?take=${take}&skip=${page}`,
+    `${process.env.REACT_APP_URL}/api/usersInformation/showPosts?take=${take}`,
   );
 };
 export const deletePost = async (id: number) => {
   return await axios.delete(`${process.env.REACT_APP_URL}/api/usersInformation/deleted/${id}`);
+};
+export const deleteImage = async (id: number) => {
+  return await axios.delete(`${process.env.REACT_APP_URL}/api/usersInformation/deletedImage/${id}`);
+};
+export const updatePost = async (id: number, quotes: string) => {
+  const UpdateQuotes = { quotes: quotes };
+  return await axiosText.patch(
+    `${process.env.REACT_APP_URL}/api/usersInformation/updateUserPost/${id}`,
+    UpdateQuotes,
+  );
 };

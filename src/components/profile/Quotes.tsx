@@ -26,6 +26,7 @@ const Quotes = () => {
     loading,
     setLoading,
     setOpen,
+    currentDate,
   } = useContext(UserContext) as ContextValue;
 
   const [postValue, setPostValue] = useState<string>('');
@@ -46,16 +47,16 @@ const Quotes = () => {
           }
         }
         formData.append('quotes', postValue);
+        formData.append('date', currentDate);
         await creatPhotos(formData);
         await getPhotos();
         setSelectedImage(undefined);
         setPostValue('');
-        const LimitedgetResponse = await getLimitedPhotos();
-        setPhotos(LimitedgetResponse.data);
+        const limitedGetResponse = await getLimitedPhotos();
+        setPhotos(limitedGetResponse.data);
         setOpen(true);
       }
     } catch (e) {
-      console.log(e, 'e');
       setPostError(true);
       setOpen(false);
     }

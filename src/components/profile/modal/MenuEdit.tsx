@@ -6,7 +6,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { deletePost } from '../../axios/api';
 import { useContext } from 'react';
 import { ContextValue, UserContext } from '../../../assets/context/userContext';
-import { quotesType } from '../../../assets/model/model';
+import { onePhoto, quotesType } from '../../../assets/model/model';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 type Props = {
@@ -14,17 +14,22 @@ type Props = {
 };
 
 const MenuEdit = ({ id }: Props) => {
-  const { setQuotes, quotes } = useContext(UserContext) as ContextValue;
+  const { setQuotes, quotes, setQuoteId, setIsEdit, setPhotos, photos } = useContext(
+    UserContext,
+  ) as ContextValue;
   const handleDelete = async (id: number) => {
     await deletePost(id);
-    if (quotes) {
-      setQuotes(quotes.filter((quote: quotesType) => quote.id !== id));
-    }
+    setQuotes(quotes?.filter((quote: quotesType) => quote.id !== id));
+    setPhotos(photos?.filter((photo: onePhoto) => photo.postId !== id));
   };
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
+  };
+  const handleEdit = () => {
+    setQuoteId(id);
+    setIsEdit(true);
   };
   const handleClose = () => {
     setAnchorEl(null);
@@ -50,7 +55,7 @@ const MenuEdit = ({ id }: Props) => {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={handleEdit}>
           <EditIcon sx={{ paddingRight: '5px' }} />
           Edit Post
         </MenuItem>

@@ -1,8 +1,9 @@
 import React, { Dispatch, FC, ReactNode, useState } from 'react';
 import { createContext } from 'react';
-import { UserInfo } from '../model/model';
+import { onePhoto, UserInfo } from '../model/model';
 import { UsersPhoto } from '../../components/model/model';
 import { quotesType } from '../model/model';
+import { getCurrentData } from '../variables';
 
 export type ContextValue = {
   userInfo: UserInfo | undefined;
@@ -21,8 +22,18 @@ export type ContextValue = {
   setLoading: Dispatch<React.SetStateAction<boolean>>;
   error: boolean;
   setError: Dispatch<React.SetStateAction<boolean>>;
-  photos: { photo: string }[];
-  setPhotos: Dispatch<React.SetStateAction<{ photo: string }[]>>;
+  photos: onePhoto[];
+  setPhotos: Dispatch<React.SetStateAction<onePhoto[]>>;
+  currentDate: string;
+  setCurrentDate: Dispatch<React.SetStateAction<string>>;
+  isEdit: boolean;
+  setIsEdit: Dispatch<React.SetStateAction<boolean>>;
+  quoteId: number;
+  setQuoteId: Dispatch<React.SetStateAction<number>>;
+  photoId: number;
+  setPhotoId: Dispatch<React.SetStateAction<number>>;
+  date: string;
+  setDate: Dispatch<React.SetStateAction<string>>;
 };
 type Props = {
   children: ReactNode;
@@ -38,7 +49,12 @@ export const UserContextProvider: FC<Props> = ({ children }) => {
   const [quotes, setQuotes] = useState<quotesType[] | undefined>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-  const [photos, setPhotos] = useState<{ photo: string }[]>([]);
+  const [photos, setPhotos] = useState<onePhoto[]>([]);
+  const [currentDate, setCurrentDate] = useState<string>(getCurrentData());
+  const [isEdit, setIsEdit] = useState<boolean>(false);
+  const [quoteId, setQuoteId] = useState<number>(0);
+  const [date, setDate] = useState<string>('');
+  const [photoId, setPhotoId] = useState<number>(0);
   const handleClose = () => setOpen(false);
   return (
     <UserContext.Provider
@@ -61,6 +77,16 @@ export const UserContextProvider: FC<Props> = ({ children }) => {
         setError,
         photos,
         setPhotos,
+        currentDate,
+        setCurrentDate,
+        isEdit,
+        setIsEdit,
+        quoteId,
+        setQuoteId,
+        date,
+        setDate,
+        photoId,
+        setPhotoId,
       }}
     >
       {children}
