@@ -1,6 +1,7 @@
 import { styled } from '@mui/system';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import Input from '@mui/joy/Input';
 export const PostBox = styled(Box)({
   backgroundColor: 'white',
   height: 'auto',
@@ -47,4 +48,15 @@ export const Comment = styled(Box)({
   alignItems: 'center',
   gap: '5px',
 });
-export const Share = styled(Box)({});
+export const Share = styled(Box)({
+  display: 'flex',
+  alignItems: 'center',
+  gap: '5px',
+});
+export const EditTextPost = styled(Input)({
+  borderRadius: '50px',
+  height: '35px',
+  width: '80%',
+  backgroundColor: '#f0f2f5',
+  border: 'none',
+});

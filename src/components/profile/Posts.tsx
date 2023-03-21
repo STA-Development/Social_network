@@ -3,7 +3,7 @@ import { useContext, useState } from 'react';
 import { ContextValue, UserContext } from '../../assets/context/userContext';
 import * as React from 'react';
 import Typography from '@mui/material/Typography';
-//import { PhotoProvider, PhotoView } from 'react-photo-view';
+import { PhotoProvider, PhotoView } from 'react-photo-view';
 import Avatar from '@mui/material/Avatar';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import ShareIcon from '@mui/icons-material/Share';
@@ -11,11 +11,10 @@ import MenuEdit from './modal/MenuEdit';
 import { Divider } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { deleteImage, getUsersPosts, updatePost } from '../axios/api';
+import { deleteImage, deletePost, getUsersPosts, updatePost } from '../axios/api';
 import Button from '@mui/material/Button';
-import { TextPost } from '../../assets/styles/ProfileBody.style';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { onePhoto } from '../../assets/model/model';
+import { onePhoto, quotesType } from '../../assets/model/model';
 import {
   PostBox,
   HeaderPost,
@@ -26,6 +25,7 @@ import {
   Like,
   Comment,
   Share,
+  EditTextPost,
 } from '../../assets/styles/posts.Style';
 const Posts = () => {
   const { quotes, userInfo, setQuotes, isEdit, quoteId, setIsEdit, setPhotos, photos } = useContext(
@@ -57,6 +57,11 @@ const Posts = () => {
     await deleteImage(id);
     const response = await getUsersPosts();
     setQuotes(response.data);
+  };
+  const handleOnePost = async (id: number) => {
+    await deletePost(id);
+    setQuotes(quotes?.filter((quote: quotesType) => quote.id !== id));
+    setPhotos(photos?.filter((photo: onePhoto) => photo.postId !== id));
   };
 
   return (
@@ -93,7 +98,7 @@ const Posts = () => {
                           <QuotePost id='modal-modal-title'>
                             {quoteId === item.id && isEdit ? (
                               <Box sx={{ display: 'flex', gap: '10px' }}>
-                                <TextPost
+                                <EditTextPost
                                   value={item.quotes}
                                   onChange={(e) => handleChangeQuotes(e.target.value)}
                                 />
@@ -109,42 +114,81 @@ const Posts = () => {
                         <Box sx={{ paddingTop: '10px' }}></Box>
                         <Box className='foo' sx={{ display: 'flex', justifyContent: 'center' }}>
                           <ImagesPost>
-                            {item.photos.map((item2, index) => (
-                              <Box key={index}>
-                                {item.photos.length === 1 ? (
-                                  <img
-                                    width='500px'
-                                    height='500px'
-                                    alt={item2.photo}
-                                    src={`${process.env.REACT_APP_URL}${item2.photo}`}
-                                  />
-                                ) : (
-                                  <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
-                                    {quoteId === item.id && isEdit ? (
-                                      <Box sx={{ display: 'flex' }}>
-                                        <DeleteIcon
-                                          color='error'
-                                          onClick={() => handleDelete(item2.id)}
-                                        />
-                                        <img
-                                          width='130px'
-                                          height='130px'
-                                          alt={item2.photo}
+                            <PhotoProvider>
+                              {item.photos.map((item2, index) => (
+                                <Box key={index}>
+                                  {item.photos.length === 1 ? (
+                                    <Box>
+                                      {quoteId === item.id && isEdit ? (
+                                        <Box>
+                                          <DeleteIcon
+                                            sx={{
+                                              '&:hover': {
+                                                color: 'pink',
+                                                cursor: 'pointer',
+                                              },
+                                            }}
+                                            color='error'
+                                            onClick={() => handleOnePost(item2.postId)}
+                                          />
+                                          <img
+                                            width='500px'
+                                            height='500px'
+                                            alt={item2.photo}
+                                            src={`${process.env.REACT_APP_URL}${item2.photo}`}
+                                          />
+                                        </Box>
+                                      ) : (
+                                        <PhotoView
                                           src={`${process.env.REACT_APP_URL}${item2.photo}`}
-                                        />
-                                      </Box>
-                                    ) : (
-                                      <img
-                                        width='150px'
-                                        height='150px'
-                                        alt={item2.photo}
-                                        src={`${process.env.REACT_APP_URL}${item2.photo}`}
-                                      />
-                                    )}
-                                  </Box>
-                                )}
-                              </Box>
-                            ))}
+                                        >
+                                          <img
+                                            width='500px'
+                                            height='500px'
+                                            alt={item2.photo}
+                                            src={`${process.env.REACT_APP_URL}${item2.photo}`}
+                                          />
+                                        </PhotoView>
+                                      )}
+                                    </Box>
+                                  ) : (
+                                    <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
+                                      {quoteId === item.id && isEdit ? (
+                                        <Box sx={{ display: 'flex' }}>
+                                          <DeleteIcon
+                                            sx={{
+                                              '&:hover': {
+                                                color: 'pink',
+                                                cursor: 'pointer',
+                                              },
+                                            }}
+                                            color='error'
+                                            onClick={() => handleDelete(item2.id)}
+                                          />
+                                          <img
+                                            width='130px'
+                                            height='130px'
+                                            alt={item2.photo}
+                                            src={`${process.env.REACT_APP_URL}${item2.photo}`}
+                                          />
+                                        </Box>
+                                      ) : (
+                                        <PhotoView
+                                          src={`${process.env.REACT_APP_URL}${item2.photo}`}
+                                        >
+                                          <img
+                                            width='150px'
+                                            height='150px'
+                                            alt={item2.photo}
+                                            src={`${process.env.REACT_APP_URL}${item2.photo}`}
+                                          />
+                                        </PhotoView>
+                                      )}
+                                    </Box>
+                                  )}
+                                </Box>
+                              ))}
+                            </PhotoProvider>
                           </ImagesPost>
                         </Box>
                         <Box sx={{ paddingTop: '30px' }}></Box>
