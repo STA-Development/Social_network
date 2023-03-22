@@ -1,12 +1,10 @@
 import axios from 'axios';
-
 const instance = axios.create({
   baseURL: process.env.REACT_APP_URL,
   headers: {
-    'Content-Type': 'text/json',
+    'Content-Type': 'application/json',
   },
 });
-
 instance.interceptors.request.use((config) => {
   const token = localStorage.accessToken;
   if (config.headers) {
@@ -14,3 +12,5 @@ instance.interceptors.request.use((config) => {
   }
   return config;
 });
+
+export default instance;
