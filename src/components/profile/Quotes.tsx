@@ -59,8 +59,9 @@ const Quotes = () => {
     } catch (e) {
       setPostError(true);
       setOpen(false);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   const getPhotos = async () => {
@@ -78,8 +79,9 @@ const Quotes = () => {
       setQuotes(mergedData);
     } catch (error) {
       return error;
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   const handlePreview = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -111,7 +113,6 @@ const Quotes = () => {
       setSelectedImage(fileList.files);
     }
   };
-
   return (
     <UploadDiv>
       <Box sx={{ padding: '20px 10px' }}>
@@ -162,8 +163,7 @@ const Quotes = () => {
         <Box>
           <PrevPhotosDiv>
             {selectedImage &&
-              selectedImage &&
-              [...Array(selectedImage.length)].map(
+              Array.from(selectedImage).map(
                 (_, index) =>
                   selectedImage &&
                   selectedImage[index] && (

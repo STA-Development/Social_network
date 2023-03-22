@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { SignUpImage } from '../../../assets/images/Cloud';
 import Button from '@mui/material/Button';
-import { GoogleButtonUI, LogInButtonUI } from '../colorButton';
-import GoogleLogo from '../logos/GoogleLogo';
+import { LogInButtonUI } from '../colorButton';
 import { Link, useNavigate } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
@@ -12,7 +11,7 @@ import { useForm } from 'react-hook-form';
 import { createUsers } from '../../axios/axiosForms';
 import { Stack } from '@mui/material';
 import SweetAlert2 from 'react-sweetalert2';
-import { regex } from '../../../assets/variables';
+import { regex } from '../../../assets/variables/regex';
 import {
   InputFields,
   SignUpScreenStyle,
@@ -56,7 +55,7 @@ const SignUpPage = () => {
       <InputFields>
         <Box sx={{ backgroundColor: 'white' }}>
           <DisplayScreen>
-            <Box>
+            <Box component='form' onSubmit={handleSignUp}>
               <Stack spacing={2}>
                 <Typography variant='h4' sx={{ fontSize: '25px', marginTop: '10%' }}>
                   Create Account
@@ -64,12 +63,6 @@ const SignUpPage = () => {
 
                 <Typography>Welcome, Please create an account</Typography>
               </Stack>
-              <Button sx={GoogleButtonUI} variant='outlined'>
-                <GoogleLogo />
-                <Box component='div' sx={{ display: 'inline', marginLeft: '5px' }}>
-                  Sign in with google
-                </Box>
-              </Button>
             </Box>
 
             <StyleDivider></StyleDivider>

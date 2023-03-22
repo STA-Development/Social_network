@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Button from '@mui/material/Button';
-import { GoogleButtonUI, LogInButtonUI } from '../colorButton';
-import GoogleLogo from '../logos/GoogleLogo';
+import { LogInButtonUI } from '../colorButton';
 import { Link } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
@@ -10,7 +9,7 @@ import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { login } from '../../axios/axiosForms';
 import { MoonLoginImage } from '../../../assets/images/Moon';
-import { regex } from '../../../assets/variables';
+import { regex } from '../../../assets/variables/regex';
 import {
   LoginScreenStyle,
   DisplayScreen,
@@ -29,7 +28,6 @@ const LoginPage = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-
   const handleLogin = handleSubmit(async (data) => {
     try {
       const response = await login({
@@ -44,27 +42,18 @@ const LoginPage = () => {
       }
       return data;
     } catch (error) {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      throw new Error(error.response.data.message);
+      return error;
     }
   });
   return (
     <LoginScreenStyle>
       <DisplayScreen>
         <Box sx={{ backgroundColor: 'white' }}>
-          <SubmitDisplay component='form'>
+          <SubmitDisplay component='form' onSubmit={handleLogin}>
             <Typography variant='h4' sx={{ fontSize: '30px' }}>
               Welcome Back
             </Typography>
             <Typography>Welcome Back ! Please enter your details</Typography>
-
-            <Button sx={GoogleButtonUI} variant='outlined'>
-              <GoogleLogo />
-              <Box component='div' sx={{ display: 'inline', marginLeft: '5px' }}>
-                Log in with google
-              </Box>
-            </Button>
 
             <StyleDivider></StyleDivider>
 

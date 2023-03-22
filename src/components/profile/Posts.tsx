@@ -10,6 +10,7 @@ import ShareIcon from '@mui/icons-material/Share';
 import MenuEdit from './modal/MenuEdit';
 import { Divider } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { deleteImage, deletePost, getUsersPosts, updatePost } from '../axios/api';
 import Button from '@mui/material/Button';
@@ -33,9 +34,10 @@ const Posts = () => {
   ) as ContextValue;
   const [take, setTake] = useState<number>(0);
   const changeNext = async () => {
-    const response = await getUsersPosts(take + 5);
+    const page = 5;
+    const response = await getUsersPosts(take + page);
     setQuotes(response.data);
-    setTake(5 + take);
+    setTake(page + take);
   };
 
   const handleChangeQuotes = (value: string) => {
@@ -67,10 +69,10 @@ const Posts = () => {
   return (
     <Box>
       <InfiniteScroll
-        dataLength={quotes?.length ? quotes.length : 0}
+        dataLength={quotes?.length ?? 0}
         next={() => changeNext()}
         hasMore={true}
-        loader={<h4></h4>}
+        loader={<Typography variant='h6'>...</Typography>}
       >
         <Box sx={{ alignItems: 'center' }}>
           <Box>
@@ -154,20 +156,32 @@ const Posts = () => {
                                   ) : (
                                     <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
                                       {quoteId === item.id && isEdit ? (
-                                        <Box sx={{ display: 'flex' }}>
-                                          <DeleteIcon
+                                        <Box>
+                                          <Box
                                             sx={{
-                                              '&:hover': {
-                                                color: 'pink',
-                                                cursor: 'pointer',
-                                              },
+                                              backgroundColor: '#c6c6c6',
+                                              borderRadius: '50px',
+                                              width: '30px',
+                                              height: '30px',
+                                              position: 'absolute',
+                                              paddingLeft: '4px',
+                                              paddingTop: '3px',
                                             }}
-                                            color='error'
-                                            onClick={() => handleDelete(item2.id)}
-                                          />
+                                          >
+                                            <DeleteIcon
+                                              sx={{
+                                                '&:hover': {
+                                                  color: 'pink',
+                                                  cursor: 'pointer',
+                                                },
+                                              }}
+                                              color='error'
+                                              onClick={() => handleDelete(item2.id)}
+                                            />
+                                          </Box>
                                           <img
-                                            width='130px'
-                                            height='130px'
+                                            width='150px'
+                                            height='160px'
                                             alt={item2.photo}
                                             src={`${process.env.REACT_APP_URL}${item2.photo}`}
                                           />
@@ -177,8 +191,8 @@ const Posts = () => {
                                           src={`${process.env.REACT_APP_URL}${item2.photo}`}
                                         >
                                           <img
-                                            width='150px'
-                                            height='150px'
+                                            width='160px'
+                                            height='170px'
                                             alt={item2.photo}
                                             src={`${process.env.REACT_APP_URL}${item2.photo}`}
                                           />
@@ -206,7 +220,7 @@ const Posts = () => {
                           }
                         >
                           {item.liked ? (
-                            <FavoriteBorderIcon sx={{ color: 'red', cursor: 'pointer' }} />
+                            <FavoriteIcon sx={{ color: 'red', cursor: 'pointer' }} />
                           ) : (
                             <FavoriteBorderIcon sx={{ cursor: 'pointer' }} />
                           )}
